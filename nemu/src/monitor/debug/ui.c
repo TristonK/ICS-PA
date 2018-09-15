@@ -48,9 +48,9 @@ static int cmd_si(char *args) {
 static int cmd_info(char *args){
 	if (args[0]=='r'){
 		for(int i=R_EAX;i<=R_EDI;i++){
-			printf("%s: 0x %08x\n",regsl[i],reg_l(i));
+			printf("%s: 0x%08x\n",regsl[i],reg_l(i));
 	 	 	} 
-		printf("eip:0x%08x\n",cpu.eip);
+		printf("eip: 0x%08x\n",cpu.eip);
 	 	} 
 	return 0; 
 }
@@ -63,6 +63,7 @@ static int cmd_x(char *args){
 	sscanf(N,"%d",&n);
 	char *exprr =strtok(NULL," ");
     sscanf(exprr,"%x",&addre);
+	printf("%d %x",n,addre);
     for(int i=0;i<n;i++) { 
 		printf("0x%x ",vaddr_read(addre,4));
 		addre+=4;
