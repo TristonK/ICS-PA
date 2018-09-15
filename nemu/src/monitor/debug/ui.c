@@ -59,9 +59,9 @@ static int cmd_x(char *args){
 	int n;
     vaddr_t addre;
 	strtok(args," ");
-	char *N =strtok(NULL," ");
+	char *N =strtok(args," ");
 	sscanf(N,"%d",&n);
-	char *exprr =strtok(NULL," ");
+	char *exprr =strtok(args," ");
     sscanf(exprr,"%x",&addre);
     for(int i=0;i<n;i++) { 
 		printf("0x%x ",vaddr_read(addre,4));
