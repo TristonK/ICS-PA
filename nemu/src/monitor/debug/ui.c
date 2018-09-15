@@ -36,6 +36,40 @@ static int cmd_q(char *args) {
   return -1;
 }
 
+static int cmd_si(char *args) {
+	int N;
+	if(args==NULL) 
+		N=0;
+	sscanf(args,"%d",&N);
+	cpu_exec(N);
+	return 0;
+}
+
+static int cmd_info(char *args){
+	if (args[0]=='r'){
+		for(int i=R_EAX;i<=R_EDI;i++){
+			printf("%s: 0x %8x\n",regsl[i],reg_l(i));
+	 	 	} 
+		printf("eip:0x%8x\n",cpu.eip);
+	 	} 
+	return 0; 
+}
+
+static int cmd_x(char *args){
+	int n;
+    int addre;
+	strtok(args," ");
+	char *N =strtok(NULL," ");
+	sscanf(N,"%d",&n);
+	char *exprr =strtok(NULL," ");
+    sscanf(exprr,"%x",&addre);
+    for(int i=0;i<n;i++){ 
+		printf("0x%x ",vaddr_read(addre,4));
+		addre+=4;
+		}
+	printf("\n");
+	return 0;  
+	}
 static int cmd_help(char *args);
 
 static struct {
@@ -46,7 +80,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "excute n steps",cmd_si},
+  { "info", "Print the status",cmd_info},
+  { "x", "scan the memory",cmd_x},
   /* TODO: Add more commands */
 
 };
