@@ -61,7 +61,7 @@ static int cmd_x(char *args){
 	strtok(args," ");
 	char *N =strtok(args," ");
 	sscanf(N,"%d",&n);
-	char *exprr =strtok(args," ");
+	char *exprr =strtok(NULL," ");
     sscanf(exprr,"%x",&addre);
 	printf("%d %x",n,addre);
      for(int i=0;i<n;i++) { 
