@@ -63,8 +63,9 @@ static int cmd_x(char *args){
 	sscanf(N,"%d",&n);
 	char *exprr =strtok(args," ");
     sscanf(exprr,"%x",&addre);
-    for(int i=0;i<n;i++) { 
-		printf("0x%x ",vaddr_read(addre,4));
+	printf("%d %x",n,addre);
+     for(int i=0;i<n;i++) { 
+		printf("0x%08x ",vaddr_read(addre,4));
 		addre+=4;
 		}
 	printf("\n");
