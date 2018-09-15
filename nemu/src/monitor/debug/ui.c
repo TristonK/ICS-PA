@@ -57,13 +57,12 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
 	int n;
-    int addre;
+    vaddr_t addre;
 	strtok(args," ");
 	char *N =strtok(NULL," ");
 	sscanf(N,"%d",&n);
 	char *exprr =strtok(NULL," ");
     sscanf(exprr,"%x",&addre);
-	printf("%d %x",n,addre);
     for(int i=0;i<n;i++) { 
 		printf("0x%x ",vaddr_read(addre,4));
 		addre+=4;
