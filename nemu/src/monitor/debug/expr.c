@@ -133,31 +133,31 @@ int find_main_op(int p,int q){
 	int opr=p;
 	while (op<q){ 
 		if(tokens[op].type==DEC) {op++;continue;}
-		else if(tokens[op].type=='('){
+ 		else if(tokens[op].type=='('){
 			while(tokens[op].type!=')') op++;
 			}
-        else if(getprecedence(op)<=getprecedence(opr)){
+         else if(getprecedence(op)<=getprecedence(opr)){
 			opr=op;
 			op++;
 			} 
-		}
+ 		}
 	return opr;
 	}
 uint32_t eval(int p,int q){
-	if(p>q){ 
+ 	if(p>q){ 
         printf("tokens path error");
 		return -1;} 
-	else if ( p==q){
+ 	else if ( p==q){
 		if(tokens[p].type==DEC){
-			return atoi(tokens[p].str);}
-		else{ 
+ 			return atoi(tokens[p].str);}
+ 		else{ 
             printf("error:no number input");
 			return -1;
 		} 
 	}
     else if (check_parentheses(p,q)==true){
 		return eval(p+1,q-1);
-		} 
+ 		} 
 	else{
 		int op=find_main_op(p,q);
 		uint32_t val1=eval(p,op-1);
@@ -168,8 +168,8 @@ uint32_t eval(int p,int q){
 			case '*' : return val1*val2;
 			case '/' : return val1/val2;
 			default: assert(0);
- 		 	}
- 		} 
+  		 	}
+  		} 
 		return 0;
 }
 uint32_t expr(char *e, bool *success) {
@@ -179,7 +179,7 @@ uint32_t expr(char *e, bool *success) {
   } 
 
   /* TODO: Insert codes to evaluate the expression. */
-  eval(0,nr_token);
+  return eval(0,nr_token);
 
-  return 0;
+  //return 0;
 }
