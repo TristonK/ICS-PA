@@ -75,7 +75,7 @@ static int cmd_help(char *args);
 
 static int cmd_p(char *args){
 	uint32_t ans;
-	bool succ;
+	bool succ=1;
 	ans=expr(args,&succ);
 	if(succ)
 		printf("%d\n",ans);
