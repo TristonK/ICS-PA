@@ -109,11 +109,11 @@ static bool make_token(char *e) {
 bool check_parentheses(int p,int q){
 	if(tokens[p].type=='('&&tokens[q].type==')'){
 		int l=0,r=0;
-		for(int i=p;i<=q;i++){
+		for(int i=p+1;i<q;i++){
 			if(tokens[i].type=='(') l++;
 			if(tokens[i].type==')') r++;
 			if(r>l){
-				assert(0);
+				//assert(0);
 				return false;
 		 		} 
 		 	}
