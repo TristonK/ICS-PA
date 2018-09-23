@@ -64,7 +64,7 @@ static int cmd_x(char *args){
 	args= N+strlen(N)+1;
     sscanf(args,"%x",&addre);
      for(int i=0;i<n;i++) { 
-		printf("0x%08x ",vaddr_read(addre,4));
+		printf("0x%04x ",vaddr_read(addre,4));
 		addre+=4;
 		}
 	printf("\n");
@@ -73,6 +73,16 @@ static int cmd_x(char *args){
 
 static int cmd_help(char *args);
 
+static int cmd_p(char *args){
+	uint32_t ans;
+	bool succ;
+	ans=expr(args,&succ);
+	if(succ)
+		printf("%d\n",ans);
+	else 
+		assert(0);
+	return 0;
+	}
 static struct {
   char *name;
   char *description;
@@ -84,6 +94,7 @@ static struct {
   { "si", "excute n steps",cmd_si},
   { "info", "Print the status",cmd_info},
   { "x", "scan the memory",cmd_x},
+  { "p", "calculate the expression", cmd_p}
   /* TODO: Add more commands */
 
 };
