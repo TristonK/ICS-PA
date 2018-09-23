@@ -45,7 +45,7 @@ void init_regex() {
   char error_msg[128];
   int ret;
 
-  for (i = 0; i < NR_REGEX; i ++) {
+  for (i  = 0; i < NR_REGEX; i ++) {
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
@@ -72,7 +72,7 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -80,12 +80,12 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
-        /* TODO:  Now a new token is recognized with rules[i]. Add codes
+         /* TODO:  Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
+         switch (rules[i].token_type) {
 			case TK_NOTYPE: break;
           default:
 		        assert(substr_len<=32); 
@@ -96,13 +96,13 @@ static bool make_token(char *e) {
 
         break;
       }
-    }
+    } 
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
-    }
-  } 
+    } 
+  }  
 
   return true;
 }
@@ -113,7 +113,7 @@ bool check_parentheses(int p,int q){
 			if(tokens[i].type=='(') l++;
 			if(tokens[i].type==')') r++;
 			if(r>l){
-				//assert(0);
+				assert(0);
 				return false;
 		 		} 
 		 	}
@@ -179,7 +179,7 @@ uint32_t expr(char *e, bool *success) {
   } 
 
   /* TODO: Insert codes to evaluate the expression. */
-  return eval(0,nr_token);
+  return eval(0,nr_token-1);
 
   //return 0;
 }
