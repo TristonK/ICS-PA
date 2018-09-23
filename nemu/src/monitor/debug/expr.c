@@ -129,7 +129,7 @@ int getprecedence(int a){
 	else return 3;
 	}
 int find_main_op(int p,int q){
-	int op=p+1;
+	int op=p;
 	int opr=p;
 	while (op<q){ 
 		if(tokens[op].type==DEC) {op++;continue;}
