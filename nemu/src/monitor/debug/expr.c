@@ -141,7 +141,7 @@ int find_main_op(int p,int q){
 			op++;
 			} 
  		}
-	printf("%c",tokens[opr].type);
+	//printf("%c",tokens[opr].type);
 	return opr;
 	}
 uint32_t eval(int p,int q){
@@ -160,6 +160,7 @@ uint32_t eval(int p,int q){
 		return eval(p+1,q-1);
  		} 
 	else{
+		printf("have enter the else part");
 		int op=find_main_op(p,q);
 		uint32_t val1=eval(p,op-1);
 		uint32_t val2=eval(op+1,q);
