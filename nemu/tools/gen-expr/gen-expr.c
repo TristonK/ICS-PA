@@ -8,12 +8,30 @@
 // this should be enough
 static char buf[65536];
 int cnt=1;
+void gen_rand_expr();
+void restart(){
+	if(cnt>=65536){
+		memset(buf,'\0',sizeof(buf));
+		cnt=0;
+		gen_rand_expr();
+		}
+	}
 uint32_t choose(uint32_t n){
 	return rand()%n;
 }
+void gen_notype(){
+	switch(choose(20)){
+		case 1:buf[cnt]=' ',cnt++;break;
+		case 2:buf[cnt]=' ',cnt++;buf[cnt]=' ';cnt++;break;
+		default:break;
+		}
+	}
 void gen(char s){
+	gen_notype();
 	buf[cnt]=s;
 	cnt++;
+	gen_notype();
+	restart();
 }
 void gen_rand_op(){
    switch(choose(4)){
@@ -23,10 +41,19 @@ void gen_rand_op(){
        default: buf[cnt]='/';break;
 	   }
 	cnt++;
+	gen_notype();
+	restart();
 }
 void gen_num(){
-	
-	
+	gen_notype();
+	uint32_t numb=rand()%100000;
+	sprintf(buf+cnt,"%d",nmub);
+	while(numb!=0){
+		cnt++;
+		numb/=10;
+		}
+	gen_notype();
+	restart();
 }	
 static inline void gen_rand_expr() {
   buf[0] = '\0';
