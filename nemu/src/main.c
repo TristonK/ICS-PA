@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
 	  bool succ=1;
 	  me=expr(ex,&succ);
 	  printf("%dth expr: ",i);
-	  if(me==mach) printf("answer is true");
-	  else printf("answer is WRONG!");	  
+	  if(me==mach) printf("answer is true\n");
+	  else printf("answer is WRONG!,right is %u and yours is %d\n",mach,me);	  
 	  }
  fclose(fp); 
   /* Receive commands from user. */
