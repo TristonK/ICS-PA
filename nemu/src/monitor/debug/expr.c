@@ -128,15 +128,17 @@ bool check_parentheses(int p,int q){
 	   return false;
 	}
 int getprecedence(int a){
-	if(tokens[a].type=='+'||tokens[a].type=='-') return 1;
-	if(tokens[a].type=='*'||tokens[a].type=='/') return 2;
-	else return 3;
+	//if(tokens[a].type==AND) return 1;
+	if(tokens[a].type=='+'||tokens[a].type=='-') return 2;
+	if(tokens[a].type=='*'||tokens[a].type=='/') return 3;
+	else return 4;
 	}
 int find_main_op(int p,int q){
 	int op=p;
 	int opr=p;
 	while (op<q){ 
-		if(tokens[op].type==DEC) {op++;continue;}
+		if(tokens[op].type==DEC||tokens[op].type==HEX||tokens[op].type==REG) {
+			op++;continue;}
  		else if(tokens[op].type=='('){
 			int blacnt=1;op++;
 			while(blacnt!=0){
@@ -165,7 +167,42 @@ uint32_t eval(int p,int q){
  	else if (p==q){
 		if(tokens[p].type==DEC){
  			return atoi(tokens[p].str);}
- 		else{ 
+ 		else if(tokens[p].type==HEX){
+			char *stt;
+			return strtol(tokens[p].str,&stt,16);
+			}
+		else if(tokens[p].type==REG){
+			if(!strcmp(tokens[p].str,"$eax")) return cpu.eax;
+			else if(!strcmp(tokens[p].str,"$ecx")) return cpu.ecx;
+            else if(!strcmp(tokens[p].str,"$edx")) return cpu.edx;
+			else if(!strcmp(tokens[p].str,"$edx")) return cpu.edx;
+			else if(!strcmp(tokens[p].str,"$ebx")) return cpu.ebx;
+			else if(!strcmp(tokens[p].str,"$esp")) return cpu.esp;
+			else if(!strcmp(tokens[p].str,"$ebp")) return cpu.ebp;
+			else if(!strcmp(tokens[p].str,"$esi")) return cpu.esi;
+		    else if(!strcmp(tokens[p].str,"$edi")) return cpu.edi;
+			else if(!strcmp(tokens[p].str,"$ax")) return cpu.gpr[0]._16;
+			else if(!strcmp(tokens[p].str,"$cx")) return cpu.gpr[1]._16;
+			else if(!strcmp(tokens[p].str,"$dx")) return cpu.gpr[2]._16; 
+			else if(!strcmp(tokens[p].str,"$bx")) return cpu.gpr[3]._16;
+	        else if(!strcmp(tokens[p].str,"$sp")) return cpu.gpr[4]._16;
+	 	    else if(!strcmp(tokens[p].str,"$bp")) return cpu.gpr[5]._16;
+		    else if(!strcmp(tokens[p].str,"$si")) return cpu.gpr[6]._16;
+		    else if(!strcmp(tokens[p].str,"$di")) return cpu.gpr[7]._16;
+			else if(!strcmp(tokens[p].str,"$al")) return cpu.gpr[0]._8[0];
+			else if(!strcmp(tokens[p].str,"$cl")) return cpu.gpr[1]._8[0];
+			else if(!strcmp(tokens[p].str,"$dl")) return cpu.gpr[2]._8[0]; 
+			else if(!strcmp(tokens[p].str,"$bl")) return cpu.gpr[3]._8[0]; 
+			else if(!strcmp(tokens[p].str,"$ah")) return cpu.gpr[0]._8[1]; 
+			else if(!strcmp(tokens[p].str,"$ch")) return cpu.gpr[1]._8[1]; 
+			else if(!strcmp(tokens[p].str,"$dh")) return cpu.gpr[2]._8[1]; 
+			else if(!strcmp(tokens[p].str,"$bh")) return cpu.gpr[3]._8[1];
+			else if(!strcmp(tokens[p].str,"$eip")) return cpu.eip;
+			else {
+				printf("no such register\n");
+				return -1;
+				}  }
+		else {
             printf("error:no number input");
 			return -1;
 		} 
@@ -178,6 +215,10 @@ uint32_t eval(int p,int q){
 		//printf("have enter the else part");
 		int op=find_main_op(p,q);
 		//printf("%d",op);
+		if(tokens[op].type==DEREF){
+			uint32_t val=eval(op+1,q);
+			return vaddr_read(val,4);
+			}
 		uint32_t val1=eval(p,op-1);
 	//	printf("ppp: %d %d %d \n", p,op-1,val1);
 		uint32_t val2=eval(op+1,q);
@@ -187,6 +228,9 @@ uint32_t eval(int p,int q){
 			case '-' : return val1-val2; break;
 			case '*' : return val1*val2; break;
 			case '/' : return val1/val2; break;
+			case TK_EQ:   return val1==val2; break;
+			case NOT_EQ: return val1!=val2; break;
+			case AND: return val1&&val2; break;
 			default:
 			       printf("wrong operation\n"); 
 			       assert(0);
@@ -203,10 +247,10 @@ uint32_t expr(char *e, bool *success) {
   } 
   //printf("pointer is ok");
   /* TODO: Insert codes to evaluate the expression. */
- /* for(int i=0;i<nr_token;i++){
+  for(int i=0;i<nr_token;i++){
 	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1].type!=HEX)))
 	    tokens[i].type=DEREF;
-	  }*/
+	  }
   return eval(0,nr_token-1);
 
   //return 0;
