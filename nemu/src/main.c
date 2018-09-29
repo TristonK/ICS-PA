@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	  me=expr(ex,&succ);
 	  printf("%dth expr: ",i);
 	  if(me==mach) printf("answer is true\n");
-	  else printf("answer is WRONG!,right is %u and yours is %d\n",mach,me);	  
+	  else printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);	  
 	  }
  fclose(fp); 
   /* Receive commands from user. */
