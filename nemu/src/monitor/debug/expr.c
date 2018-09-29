@@ -150,6 +150,7 @@ int find_main_op(int p,int q){
 uint32_t eval(int p,int q){
  //	printf("do the func");
 	if(p>q){ 
+		printf("%d %d %d",p,q,tokens[p].type);
         printf("tokens path error");
 		return -1;} 
  	else if (p==q){
