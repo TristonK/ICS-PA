@@ -177,12 +177,14 @@ uint32_t eval(int p,int q){
 		int op=find_main_op(p,q);
 		//printf("%d",op);
 		uint32_t val1=eval(p,op-1);
+		printf("ppp: %d %d %d \n", p,op-1,val1);
 		uint32_t val2=eval(op+1,q);
+		printf("pp2%d %d %d\n ",op+1,q,val2);
 		switch(tokens[op].type){
-			case '+' : return val1+val2;
-			case '-' : return val1-val2;
-			case '*' : return val1*val2;
-			case '/' : return val1/val2;
+			case '+' : return val1+val2; break;
+			case '-' : return val1-val2; break;
+			case '*' : return val1*val2; break;
+			case '/' : return val1/val2; break;
 			default:
 			       printf("wrong operation\n"); 
 			       assert(0);
