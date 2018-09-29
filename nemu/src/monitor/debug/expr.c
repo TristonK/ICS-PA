@@ -144,7 +144,7 @@ int find_main_op(int p,int q){
 	return opr;
 	}
 uint32_t eval(int p,int q){
- 	printf("do the func");
+ //	printf("do the func");
 	if(p>q){ 
         printf("tokens path error");
 		return -1;} 
@@ -181,6 +181,7 @@ uint32_t eval(int p,int q){
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
+	printf("wrong");
     return 0;
   } 
   printf("pointer is ok");
