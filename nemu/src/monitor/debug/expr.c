@@ -248,7 +248,7 @@ uint32_t expr(char *e, bool *success) {
   //printf("pointer is ok");
   /* TODO: Insert codes to evaluate the expression. */
   for(int i=0;i<nr_token;i++){
-	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1].type!=HEX)))
+	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1].type!=HEX&&tokens[i-1].type!=')')))
 	    tokens[i].type=DEREF;
 	  }
   return eval(0,nr_token-1);
