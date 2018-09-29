@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   int is_batch_mode = init_monitor(argc, argv);
   FILE *fp=fopen("~/ics2018/nemu/tools/gen-expr/input","r");
-  assert(fp!=NULL);
+  //assert(fp!=NULL);
   uint32_t mach,me;
   char ex[35];
   for(int i=1;i<=100;i++){
