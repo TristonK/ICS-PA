@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   FILE *fp=fopen("~/ics2018/nemu/tools/gen-expr/input","r");
   //assert(fp!=NULL);
   uint32_t mach,me;
-  char ex[300];
+  char ex[500];
   for(int i=1;i<=100;i++){
       memset(ex,'\0',sizeof(ex));
 	  fscanf(fp,"%u",&mach);
