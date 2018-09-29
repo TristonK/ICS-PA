@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,DEC
+  TK_NOTYPE = 256, TK_EQ,DEC,HEX,REG,AND,NOT_EQ,DEREF
 
   /* TODO: Add more token types */
 
@@ -23,6 +23,8 @@ static struct rule {
    */ 
 
   {" +", TK_NOTYPE},    // spaces
+  {"0[xX][0-9a-fA-F]+", HEX}, //hex number
+  {"\\$[a-zA-Z]+",REG},   //register
   {"\\+", '+'},         // plus
   {"==", TK_EQ},         // equal
   {"\\-", '-'},         //minus
@@ -30,7 +32,9 @@ static struct rule {
   {"\\/", '/'},         //div
   {"[0-9]+", DEC},       //decimal number
   {"\\(", '('},          
-  {"\\)", ')'}
+  {"\\)", ')'},
+  {"&&", AND},
+  {"!=", NOT_EQ}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -58,8 +62,7 @@ typedef struct token {
   int type;
   char str[32];
 } Token;
-
-Token tokens[32];
+Token tokens[65532];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -187,6 +190,10 @@ uint32_t expr(char *e, bool *success) {
   } 
   //printf("pointer is ok");
   /* TODO: Insert codes to evaluate the expression. */
+  /* for(int i=0;i<nr_token;i++){
+	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1]!=HEX)))
+	    tokens[i].type=DEREF;
+	  }*/
   return eval(0,nr_token-1);
 
   //return 0;
