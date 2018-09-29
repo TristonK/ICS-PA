@@ -144,7 +144,8 @@ int find_main_op(int p,int q){
 	return opr;
 	}
 uint32_t eval(int p,int q){
- 	if(p>q){ 
+ 	printf("do the func");
+	if(p>q){ 
         printf("tokens path error");
 		return -1;} 
  	else if (p==q){

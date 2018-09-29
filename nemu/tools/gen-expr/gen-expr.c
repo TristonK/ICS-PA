@@ -7,14 +7,14 @@
 
 // this should be enough
 static char buf[65536];
-int cnt=1;
-/*void restart(){
+int cnt=0;
+void restart(){
 	if(cnt>=65536){
 		memset(buf,'\0',sizeof(buf));
 		cnt=0;
 		gen_rand_expr();
 		}
-	}*/
+	}
 uint32_t choose(uint32_t n){
 	return rand()%n;
 }
@@ -30,7 +30,7 @@ void gen(char s){
 	buf[cnt]=s;
 	cnt++;
 	gen_notype();
-	//restart();
+	restart();
 }
 void gen_rand_op(){
    switch(choose(4)){
@@ -41,7 +41,7 @@ void gen_rand_op(){
 	   }
 	cnt++;
 	gen_notype();
-	//restart();
+	restart();
 }
 void gen_num(){
 	gen_notype();
@@ -52,22 +52,24 @@ void gen_num(){
 		numb/=10;
 		}
 	gen_notype();
-	//restart();
+	restart();
 }	
 static inline void gen_rand_expr() {
-  buf[0] = '\0';
+ // buf[0] = '\0';
   switch(choose(3)){
 	  case 0: gen_num();break;
-	  case 1: gen('(');gen_rand_expr();gen('}');break;
+	  case 1: gen('(');gen_rand_expr();gen(')');break;
 	  default:gen_rand_expr();gen_rand_op();gen_rand_expr();break;
 	  }
+	  //buf[cnt++]='1';
+   buf[cnt]='\0';
 }
 
 static char code_buf[65536];
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = gen_rand_expr(); "
+"  unsigned result = %s; "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
