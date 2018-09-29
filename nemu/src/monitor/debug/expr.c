@@ -92,9 +92,9 @@ static bool make_token(char *e) {
           default:
 		        assert(substr_len<=32); 
 		        tokens[nr_token].type=rules[i].token_type;
-		    sscanf(substr_start,"%[0-9]",tokens[nr_token].str);
-		//		strncpy(tokens[nr_token].str,substr_start,substr_len);
-			//	tokens[nr_token].str[substr_len]='\0';
+		  //  sscanf(substr_start,"%[0-9]",tokens[nr_token].str);
+			strncpy(tokens[nr_token].str,substr_start,substr_len);
+				tokens[nr_token].str[substr_len]='\0';
 				nr_token++;
         }
 
