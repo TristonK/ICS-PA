@@ -160,7 +160,7 @@ uint32_t eval(int p,int q){
 		return eval(p+1,q-1);
  		} 
 	else{
-		printf("have enter the else part");
+		//printf("have enter the else part");
 		int op=find_main_op(p,q);
 		uint32_t val1=eval(p,op-1);
 		uint32_t val2=eval(op+1,q);
@@ -179,7 +179,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-  printf("pointer is ok");
+  //printf("pointer is ok");
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0,nr_token-1);
 
