@@ -77,9 +77,10 @@ static int cmd_p(char *args){
 	uint32_t ans;
 	bool succ;
 	succ=1;
+	printf("get");
 	ans=expr(args,&succ);
 	if(succ)
-		printf("%d\n",ans);
+		printf("%dooo\n",ans);
 	else 
 		assert(0);
 	return 0;
