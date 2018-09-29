@@ -139,6 +139,7 @@ int find_main_op(int p,int q){
 			opr=op;
 			op++;
 			} 
+		else op++;
  		}
 	//printf("%c",tokens[opr].type);
 	return opr;
