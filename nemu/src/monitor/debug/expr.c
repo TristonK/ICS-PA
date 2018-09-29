@@ -93,7 +93,7 @@ static bool make_token(char *e) {
 		        assert(substr_len<=32); 
 		        tokens[nr_token].type=rules[i].token_type;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
-				tokens[nr_token].str[substr_len]='\0';
+	//			tokens[nr_token].str[substr_len]='\0';
 				nr_token++;
         }
 
