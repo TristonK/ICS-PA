@@ -56,10 +56,10 @@ void init_regex() {
 
 typedef struct token {
   int type;
-  char str[65536];
+  char str[32];
 } Token;
 
-Token tokens[65536];
+Token tokens[32];
 int nr_token;
 
 static bool make_token(char *e) {
