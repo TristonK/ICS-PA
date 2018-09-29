@@ -204,7 +204,10 @@ uint32_t expr(char *e, bool *success) {
 	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1].type!=HEX)))
 	    tokens[i].type=DEREF;
 	  }*/
-	  printf("%s\n",tokens[0].str);
+	  printf("%s\n",tokens[18].str);
+	  int temp;
+	  sscanf(tokens[18].str,"%d",&temp);
+	  printf("%d\n",temp);
   return eval(0,nr_token-1);
 
   //return 0;
