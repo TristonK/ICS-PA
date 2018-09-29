@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	  if(me==mach) printf("answer is true");
 	  else printf("answer is WRONG!");	  
 	  }
-  
+ fclose(fp); 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
 
