@@ -193,6 +193,7 @@ uint32_t eval(int p,int q){
 		return 0;
 }
 uint32_t expr(char *e, bool *success) {
+  memset(tokens,'\0',sizeof(tokens));
   if (!make_token(e)) {
     *success = false;
 	printf("wrong");
