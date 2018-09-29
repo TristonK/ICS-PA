@@ -136,7 +136,13 @@ int find_main_op(int p,int q){
 	while (op<q){ 
 		if(tokens[op].type==DEC) {op++;continue;}
  		else if(tokens[op].type=='('){
-			while(tokens[op].type!=')') op++;
+			int blacnt=1;op++;
+			while(blacnt!=0){
+				if(tokens[op].type==')') blacnt--;
+				if(tokens[op].type=='(') blacnt++;
+				op++;
+				}
+			//while(tokens[op].type!=')') op++;
 			}
          else if(getprecedence(op)<=getprecedence(opr)){
 			opr=op;
