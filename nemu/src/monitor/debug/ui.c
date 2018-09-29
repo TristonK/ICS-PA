@@ -79,7 +79,7 @@ static int cmd_p(char *args){
 	succ=1;
 //	printf("get");
 	ans=expr(args,&succ);
-	printf("111");
+//	printf("111");
 	if(succ)
 		printf("%d\n",ans);
 	else 
