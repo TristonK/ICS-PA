@@ -177,9 +177,9 @@ uint32_t eval(int p,int q){
 		int op=find_main_op(p,q);
 		//printf("%d",op);
 		uint32_t val1=eval(p,op-1);
-		printf("ppp: %d %d %d \n", p,op-1,val1);
+	//	printf("ppp: %d %d %d \n", p,op-1,val1);
 		uint32_t val2=eval(op+1,q);
-		printf("pp2%d %d %d\n ",op+1,q,val2);
+		//printf("pp2%d %d %d\n ",op+1,q,val2);
 		switch(tokens[op].type){
 			case '+' : return val1+val2; break;
 			case '-' : return val1-val2; break;
@@ -204,6 +204,7 @@ uint32_t expr(char *e, bool *success) {
 	  if(tokens[i].type=='*'&&(i==0||(tokens[i-1].type!=DEC&&tokens[i-1].type!=HEX)))
 	    tokens[i].type=DEREF;
 	  }*/
+	  printf("%s",tokens[18].str);
   return eval(0,nr_token-1);
 
   //return 0;
