@@ -79,8 +79,8 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+      //  Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+        //    i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
          /* TODO:  Now a new token is recognized with rules[i]. Add codes
@@ -179,9 +179,9 @@ uint32_t eval(int p,int q){
 		int op=find_main_op(p,q);
 		//printf("%d",op);
 		uint32_t val1=eval(p,op-1);
-		printf("ppp: %d %d %d \n", p,op-1,val1);
+	//	printf("ppp: %d %d %d \n", p,op-1,val1);
 		uint32_t val2=eval(op+1,q);
-		printf("pp2%d %d %d\n ",op+1,q,val2);
+	//	printf("pp2%d %d %d\n ",op+1,q,val2);
 		switch(tokens[op].type){
 			case '+' : return val1+val2; break;
 			case '-' : return val1-val2; break;
