@@ -157,7 +157,7 @@ int find_main_op(int p,int q){
 	//printf("%c",tokens[opr].type);
 	return opr;
 	}
-uint32_t eval(int p,int q){
+int  eval(int p,int q){
  //	printf("do the func");
   //  printf("%d %d\n",p,q);
 	if(p>q){ 
@@ -219,10 +219,10 @@ uint32_t eval(int p,int q){
 			uint32_t val=eval(op+1,q);
 			return vaddr_read(val,4);
 			}
-		uint32_t val1=eval(p,op-1);
-		printf("ppp: %d %d %u \n", p,op-1,val1);
-		uint32_t val2=eval(op+1,q);
-		printf("pp2%d %d %u\n ",op+1,q,val2);
+		int  val1=eval(p,op-1);
+	//	printf("ppp: %d %d %u \n", p,op-1,val1);
+		int  val2=eval(op+1,q);
+	//	printf("pp2%d %d %u\n ",op+1,q,val2);
 		switch(tokens[op].type){
 			case '+' : return val1+val2; break;
 			case '-' : return val1-val2; break;
