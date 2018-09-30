@@ -50,7 +50,6 @@ void cpu_exec(uint64_t n) {
 #endif
 
     if (nemu_state != NEMU_RUNNING) {
-		printf("dd");
       if (nemu_state == NEMU_END) {
         printflog("\33[1;31mnemu: HIT %s TRAP\33[0m at eip = 0x%08x\n\n",
             (cpu.eax == 0 ? "GOOD" : "BAD"), cpu.eip - 1);
@@ -62,7 +61,7 @@ void cpu_exec(uint64_t n) {
         return;
       }
 	  else if(nemu_state == NEMU_STOP){
-		  return;
+		  return;printf("no return");
 		  }
     }
   }
