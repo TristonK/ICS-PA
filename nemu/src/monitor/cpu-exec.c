@@ -41,6 +41,7 @@ void cpu_exec(uint64_t n) {
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
     bool nochange=check_point();
+	printf("%d",nochange);
 	if(!nochange) nemu_state=NEMU_STOP;
 #endif
 
