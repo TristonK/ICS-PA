@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 		continue;
 		}*/
     int result;
-    sscanf(jegee, "%d", &result);
+    sscanf(jegee, "%u", &result);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
