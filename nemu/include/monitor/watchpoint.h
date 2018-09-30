@@ -11,6 +11,9 @@ typedef struct watchpoint {
   /* TODO: Add more members if necessary */
   bool used;
 } WP;
-WP* new_up();
-void free_up();
+WP* new_up(char*);
+void free_up(WP*);
+void delete_wp(int);
+void infopoint();
+bool check_point();
 #endif

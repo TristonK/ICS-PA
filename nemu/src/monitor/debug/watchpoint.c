@@ -1,6 +1,5 @@
 #include "monitor/watchpoint.h"
-#include "monitor/expr.h"
-
+#include "monitor/expr.h" 
 #define NR_WP 32
 
 static WP wp_pool[NR_WP];
@@ -68,6 +67,42 @@ void free_wp(WP *wp){
 		temp->next
 		}*/
 	}
-
-
-	
+void delete_wp(int no){
+	WP *p,*parent=NULL;
+	p=head;
+	while(p!=NULL&&p->NO!=no){
+		parent=p;
+		p=p->next;
+		}
+	if(p==NULL){
+		printf("no such watchpoint\n");
+		return;
+		}
+	if(parent==NULL) head=p->next;
+	else parent->next=p->next;
+	free_wp(p);
+	}
+void infopoint(){
+	printf("%20s%20s%20s\n","INDEX","EXP","VAL");
+	WP *p;
+	p=head;
+	while(p!=NULL){
+		printf("%20d%20s%20u\n",p->NO,p->exp,p->val);
+		p=p->next;
+		}
+	}
+bool check_point(){
+	WP *p;
+	p=head;
+	while(p!=NULL){
+		bool succ=true;
+		uint32_t valnew=expr(p->exp,&succ);
+		if(valnew!=p->val){
+			//nemu_state=NEMU_STOP;
+			printf("the watchpoints %d has been changed",p->NO);
+            return false;
+			}
+		p=p->next;
+		}
+		return true;
+	}
