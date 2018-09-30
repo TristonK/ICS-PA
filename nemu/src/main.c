@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
   //assert(fp!=NULL);
   uint32_t mach,me;
   char ex[500];
+  int cnttt=0;
   for(int i=1;i<=100;i++){
       memset(ex,'\0',sizeof(ex));
 	  fscanf(fp,"%u",&mach);
@@ -19,8 +20,9 @@ int main(int argc, char *argv[]) {
 	  me=expr(ex,&succ);
 	  printf("%dth expr: ",i);
 	  if(me==mach) printf("answer is true\n");
-	  else printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);	  
+	  else {printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);cnttt++;}  
 	  }
+printf("you have %d expression get wrong answer.\n",cnttt);
  fclose(fp); 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
