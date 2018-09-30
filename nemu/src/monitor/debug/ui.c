@@ -76,14 +76,14 @@ static int cmd_x(char *args){
 
 static int cmd_w(char *args){
 	WP *p =new_up(args);
-    printf("we have set the watchpoint, the index is %d and the val is %d",p->NO,p->val);
+    printf("we have set the watchpoint, the index is %d and the val is %d\n",p->NO,p->val);
 	return 0; 
 	}
 static int cmd_d(char *args){
 	int no;
 	no=atoi(args);
     delete_wp(no);
-	printf("we have delete the watchpoint with no.%d",no);
+	printf("we have delete the watchpoint with no.%d\n",no);
 	return 0;
 	}
 static int cmd_help(char *args);
