@@ -51,7 +51,10 @@ static int cmd_info(char *args){
 			printf("%s: 0x%08x\n",regsl[i],reg_l(i));
 	 	 	} 
 		printf("eip: 0x%08x\n",cpu.eip);
-	 	} 
+	 	}
+	else if(args[0]=='w'){
+		infopoint();
+		} 
 	return 0; 
 }
 
@@ -71,6 +74,18 @@ static int cmd_x(char *args){
 	return 0;  
 }
 
+static int cmd_w(char *args){
+	WP *p =new_up(args);
+    printf("we have set the watchpoint, the index is %d and the val is %d",p->NO,p->val);
+	return 0; 
+	}
+static int cmd_d(char *args){
+	int no;
+	no=atoi(args);
+    delete_wp(no);
+	printf("we have delete the watchpoint with no.%d",no);
+	return 0;
+	}
 static int cmd_help(char *args);
 
 static int cmd_p(char *args){
@@ -97,7 +112,9 @@ static struct {
   { "si", "excute n steps",cmd_si},
   { "info", "Print the status",cmd_info},
   { "x", "scan the memory",cmd_x},
-  { "p", "calculate the expression", cmd_p}
+  { "p", "calculate the expression", cmd_p},
+  { "w", "set the watchpoint", cmd_w},
+  { "d", "delete the watchpoint with the index", cmd_d}
   /* TODO: Add more commands */
 
 };
