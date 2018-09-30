@@ -65,4 +65,4 @@ clean:
 	$(MAKE) -C tools/gen-expr clean
 	$(MAKE) -C tools/qemu-diff clean
 count:
-	find . -name "*.c" -or -name *.h |xargs cat|grep -v ^$|wc -l
+	find . -name "*.c" -or -name *.h |xargs wc -l
