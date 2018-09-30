@@ -99,7 +99,7 @@ bool check_point(){
 		uint32_t valnew=expr(p->exp,&succ);
 		if(valnew!=p->val){
 			//nemu_state=NEMU_STOP;
-			printf("the watchpoints %d has been changed",p->NO);
+			printf("the watchpoints %d has been changed\n",p->NO);
             return false;
 			}
 		p=p->next;
