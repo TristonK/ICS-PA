@@ -72,26 +72,57 @@ void difftest_step(uint32_t eip) {
   // TODO: Check the registers state with the reference design.
   // Set `nemu_state` to `NEMU_ABORT` if they are not the same.
  // TODO();
-  bool diff=false;
-   if(ref_r.eax != cpu.eax)
-		 diff = true;
-    if(ref_r.ecx != cpu.ecx)
-		  diff = true;
+ // bool diff=false;
+   if(ref_r.eax != cpu.eax){
+		 Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);	  
+		  nemu_state = NEMU_ABORT;
+}
+    if(ref_r.ecx != cpu.ecx){
+		 Log("ecx nemu  %#x  qemu  %#x\n", cpu.ecx, ref_r.ecx);	  
+		  nemu_state = NEMU_ABORT;
+}
+
+		 // diff = true;
     if(ref_r.edx != cpu.edx)
-		  diff = true;
-    if(ref_r.ebx != cpu.ebx)
-		  diff = true;
-    if(ref_r.esp != cpu.esp)
-		  diff = true;
-    if(ref_r.ebp != cpu.ebp)	
-		  diff = true;
-    if(ref_r.esi != cpu.esi)
-		  diff = true;
-   if(ref_r.edi != cpu.edi)
-		  diff = true;
-    if(ref_r.eip != cpu.eip)		
-		  diff = true;											  
-    if (diff) {
+	{
+		 Log("edx nemu  %#x  qemu  %#x\n", cpu.edx, ref_r.edx);	  
+		  nemu_state = NEMU_ABORT;
+}
+	 // diff = true;
+    if(ref_r.ebx != cpu.ebx){
+		 // diff = true;
+		 Log("ebx nemu  %#x  qemu  %#x\n", cpu.ebx, ref_r.ebx);	  
+		  nemu_state = NEMU_ABORT;
+}
+     if(ref_r.esp != cpu.esp){
+		 // diff = true;{
+		 Log("esp nemu  %#x  qemu  %#x\n", cpu.esp, ref_r.esp);	  
+		  nemu_state = NEMU_ABORT;
+}
+
+    if(ref_r.ebp != cpu.ebp){	
+		 // diff = true;{
+		 Log("ebp nemu  %#x  qemu  %#x\n", cpu.ebp, ref_r.ebp);	  
+		  nemu_state = NEMU_ABORT;
+}
+
+    if(ref_r.esi != cpu.esi){
+		 // diff = true;
+		 Log("esi nemu  %#x  qemu  %#x\n", cpu.esi, ref_r.esi);	  
+		  nemu_state = NEMU_ABORT;
+   }
+   if(ref_r.edi != cpu.edi){
+		 // diff = true;
+		 Log("edi nemu  %#x  qemu  %#x\n", cpu.edi, ref_r.edi);	  
+		  nemu_state = NEMU_ABORT;
+   }  
+    if(ref_r.eip != cpu.eip){
+		 Log("eip nemu  %#x  qemu  %#x\n", cpu.eip, ref_r.eip);	  
+		  nemu_state = NEMU_ABORT;
+    }
+	
+		 // diff = true;											  
+   /* if (diff) {
 		Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);
 		Log("ecx nemu  %#x  qemu  %#x\n", cpu.ecx, ref_r.ecx);	
 		Log("edx nemu  %#x  qemu  %#x\n", cpu.edx, ref_r.edx);
@@ -101,6 +132,6 @@ void difftest_step(uint32_t eip) {
 		Log("esi nemu  %#x  qemu  %#x\n", cpu.esi, ref_r.esi);
      	Log("edi nemu  %#x  qemu  %#x\n", cpu.edi, ref_r.edi);
 		Log("eip nemu  %#x  qemu  %#x\n", cpu.eip, ref_r.eip);
-	    nemu_state = NEMU_ABORT;
-	 }
+	   nemu_state = NEMU_ABORT;
+	 }*/
 }
