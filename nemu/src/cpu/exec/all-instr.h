@@ -25,8 +25,8 @@ make_EHelper(lea);
 make_EHelper(popa);
 make_EHelper(cltd);
 make_EHelper(cwtl);
-make_EHelper();
 make_EHelper();*/
+make_EHelper(leave);
 make_EHelper(test);
 make_EHelper(movzx);
 make_EHelper(setcc);
