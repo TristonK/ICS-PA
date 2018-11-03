@@ -19,7 +19,8 @@ make_EHelper(pop) {
 }
 
 make_EHelper(pusha) {
-  if(decoding.is_operand_size_16){
+	TODO();
+ /* if(decoding.is_operand_size_16){
 	  t0=cpu.gpr[4]._16;
 	  rtl_push(&cpu.gpr[0]._16);
 	  rtl_push(&cpu.gpr[1]._16);
@@ -40,12 +41,13 @@ make_EHelper(pusha) {
 	  rtl_push(&cpu.ebp);
 	  rtl_push(&cpu.esi);
       rtl_push(&cpu.edi);
-  }
+  */
   print_asm("pusha");
 }
 
 make_EHelper(popa) { 
-  if(decoding.is_operand_size_16){
+	TODO();
+ /* if(decoding.is_operand_size_16){
 	  rtl_pop(&cpu.gpr[7]._16);
 	  rtl_pop(&cpu.gpr[6]._16);
 	  rtl_pop(&cpu.gpr[5]._16);
@@ -64,7 +66,7 @@ make_EHelper(popa) {
 	  rtl_pop(&cpu.edx);
 	  rtl_pop(&cpu.ecx);
 	  rtl_pop(&cpu.eax);
-  }
+  }*/
   print_asm("popa");
 }
 
@@ -93,7 +95,7 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    rtl_lr(&t0,cpu.gpr[0]._8[2],1);
+    rtl_lr(&t0,cpu.gpr[0]._8[0],1);
 	rtl_sext(&t1,&t0,1);
 	rtl_sr(cpu.gpr[0]._16,&t1,2);
   }

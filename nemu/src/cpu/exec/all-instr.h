@@ -20,3 +20,15 @@ make_EHelper(pop);
 make_EHelper(call);
 make_EHelper(ret);
 make_EHelper(jmp);
+make_EHelper(lea);
+/*make_EHelper(pusha);
+make_EHelper(popa);
+make_EHelper(cltd);
+make_EHelper(cwtl);
+make_EHelper();
+make_EHelper();
+make_EHelper();
+make_EHelper();
+make_EHelper();
+make_EHelper();
+make_EHelper();*/
