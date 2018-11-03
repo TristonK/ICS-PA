@@ -30,9 +30,11 @@ make_EHelper(call) {
  /* if(decoding.is_opraend_size_16){
   
   }else{*/
-  rtl_push(&decoding.seq_eip);
+ // rtl_push(&decoding.seq_eip);
  // rtl_j(decoding.jmp_eip);
  decoding.is_jmp=1;
+ rtl_addi(&t0,&cpu.eip,5);
+ rtl_push(&t0);
   print_asm("call %x", decoding.jmp_eip);
 }
 
