@@ -1,5 +1,6 @@
 #include "cpu/exec.h"
 #include "cpu/cc.h"
+const rtlreg_t tzero=0;
 
 make_EHelper(test) {
   TODO();
@@ -8,8 +9,11 @@ make_EHelper(test) {
 }
 
 make_EHelper(and) {
-  TODO();
-
+  rtl_and(&t2,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&t2);
+  rtl_set_CF(&tzero);
+  rtl_set_OF(&tzero);
+  rtl_update_ZFSF(&t2,id_dest->width);
   print_asm_template2(and);
 }
 
