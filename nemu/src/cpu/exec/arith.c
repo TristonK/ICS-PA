@@ -3,13 +3,18 @@
 make_EHelper(add) {
   rtl_add(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
-
+/*  if(t2<id_dest->val)
+	  cpu.CF=1;
+  else 
+	  cpu.CF=0;*/
   print_asm_template2(add);
 }
 
 make_EHelper(sub) {
   rtl_sub(&t1,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t1);
+  
+  rtl_update_ZFSF(&t1,id_dest->width);
   
   print_asm_template2(sub);
 }
@@ -19,8 +24,17 @@ make_EHelper(cmp) {
   rtl_sub(&t1,&id_dest->val,&t0);
   
   rtl_update_ZFSF(&t1,id_dest->width);
+  
+  if(id_dest->val<id_src->val)
+	  cpu.CF=1;
+  else
+	  cpu.CF=0;
 
-
+  rtl_xor(&t1,&id_dest->val,&t1);
+  rtl_xor(&t2,&id_dest->val,&id_src->val);
+  rtl_and(&t1,&t2,&t1);
+  rtl_msb(&t1,&t1,id_dest->width);
+  rtl_set_OF(&t1);
 
   print_asm_template2(cmp);
 }
