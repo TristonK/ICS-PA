@@ -18,9 +18,9 @@ int main(int argc, char *argv[]) {
 	  fscanf(fp,"%[^\n]",ex);
 	  bool succ=1;
 	  me=expr(ex,&succ);
-	  printf("%dth expr: ",i);
-	  if(me==mach) printf("answer is true\n");
-	  else {printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);cnttt++;}  
+	 // printf("%dth expr: ",i);
+	   if(me!=mach){
+	  printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);cnttt++;}  
 	  }
 printf("you have %d expression get wrong answer.\n",cnttt);
  fclose(fp); 
