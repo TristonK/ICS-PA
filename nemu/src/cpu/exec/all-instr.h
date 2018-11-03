@@ -28,7 +28,7 @@ make_EHelper(cwtl);
 make_EHelper();
 make_EHelper();
 make_EHelper();
-make_EHelper();
 make_EHelper();*/
+make_EHelper(setcc);
 make_EHelper(nop);
 make_EHelper(jcc);
