@@ -37,12 +37,12 @@ make_EHelper(sub) {
 }
 
 make_EHelper(cmp) {
- /* rtl_sext(&t0,&id_src->val,id_src->width);
+  rtl_sext(&t0,&id_src->val,id_src->width);
   rtl_sub(&t1,&id_dest->val,&t0);
   
   rtl_update_ZFSF(&t1,id_dest->width);
   
-  if(id_dest->val<id_src->val)
+  if(id_dest->val<id_src->val||id_dest->val<t2)
 	  cpu.CF=1;
   else
 	  cpu.CF=0;
@@ -52,8 +52,8 @@ make_EHelper(cmp) {
   rtl_and(&t1,&t2,&t1);
   rtl_msb(&t1,&t1,id_dest->width);
   rtl_set_OF(&t1);
-*/
-	rtl_sub(&t2,&id_dest->val,&id_src->val);
+
+/*	rtl_sub(&t2,&id_dest->val,&id_src->val);
    // rtl_setrelop(RELOP_LTU, &t3, &id_dest->val, &t2);
    //	operand_write(id_dest,&t2);
   
@@ -67,7 +67,7 @@ make_EHelper(cmp) {
   rtl_and(&t0, &t0, &t1);
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
-
+*/
 
   print_asm_template2(cmp);
 }
