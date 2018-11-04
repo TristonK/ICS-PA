@@ -25,10 +25,11 @@ make_EHelper(jmp);
 make_EHelper(lea);
 make_EHelper(not);
 /*make_EHelper(pusha);
-make_EHelper(popa);
+make_EHelper(popa);*/
 make_EHelper(cltd);
-make_EHelper(cwtl);
-make_EHelper();*/
+//make_EHelper(cwtl);
+make_EHelper(imul2);
+make_EHelper(idiv);
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 make_EHelper(leave);
