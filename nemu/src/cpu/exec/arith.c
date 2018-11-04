@@ -91,7 +91,7 @@ make_EHelper(neg) {
 }
 
 make_EHelper(adc) {
-	printf("%8x  %8x\n", id_dest->val,id_src->val);
+	printf("%8x  %8x\n ", id_dest->val,id_src->val);
   rtl_add(&t2, &id_dest->val, &id_src->val);
   rtl_setrelop(RELOP_LTU, &t3, &t2, &id_dest->val);
   rtl_get_CF(&t1);
