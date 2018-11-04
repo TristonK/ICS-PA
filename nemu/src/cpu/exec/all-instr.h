@@ -35,6 +35,7 @@ make_EHelper(jmp_rm);
 make_EHelper(leave);
 make_EHelper(test);
 make_EHelper(movzx);
+make_EHelper(movsx);
 make_EHelper(setcc);
 make_EHelper(nop);
 make_EHelper(jcc);
