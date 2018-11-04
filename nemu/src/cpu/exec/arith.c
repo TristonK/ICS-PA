@@ -11,11 +11,11 @@ make_EHelper(add) {
 }
 
 make_EHelper(sub) {
-    if(id_src->width==1&&id_dest->width!=1){
+/*    if(id_src->width==1&&id_dest->width!=1){
 		rtl_sext(&t0,&id_src->val,id_src->width);
 		rtl_sub(&t1,&id_dest->val,&t0);
 	}
-	else
+	else*/
 		rtl_sub(&t1,&id_dest->val,&id_src->val);
     operand_write(id_dest,&t1);
   
