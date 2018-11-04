@@ -73,7 +73,7 @@ void difftest_step(uint32_t eip) {
   // Set `nemu_state` to `NEMU_ABORT` if they are not the same.
  // TODO();
  // bool diff=false;
-  Log("done esp nemu %#x qemu %#x\n",cpu.esp,ref_r.esp); 
+  Log("done eip nemu %#x qemu %#x\n",cpu.eip,ref_r.eip); 
   if(ref_r.eax != cpu.eax){
 		 Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);	  
 		  nemu_state = NEMU_ABORT;
