@@ -16,7 +16,7 @@ make_EHelper(sub) {
 		rtl_sub(&t1,&id_dest->val,&t0);
 	}
 	else*/
-     printf("%8x %8x \n",id_dest->val,id_src->val);
+   //  printf("%8x %8x \n",id_dest->val,id_src->val);
 		rtl_sub(&t1,&id_dest->val,&id_src->val);
     operand_write(id_dest,&t1);
   
