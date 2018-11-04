@@ -11,7 +11,8 @@ make_EHelper(add) {
 }
 
 make_EHelper(sub) {
-  rtl_sub(&t1,&id_dest->val,&id_src->val);
+    rtl_sext(&t0,&id_src->val,id_src->width);
+   	rtl_sub(&t1,&id_dest->val,&t0);
   operand_write(id_dest,&t1);
   
   rtl_update_ZFSF(&t1,id_dest->width);
