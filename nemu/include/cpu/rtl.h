@@ -200,7 +200,7 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  at=((*result<<(32-4*width))==0);
+  at=((*result<<(32-8*width))==0);
   rtl_set_ZF(&at);
 }
 
