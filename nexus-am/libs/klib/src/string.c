@@ -3,17 +3,26 @@
 #ifndef __ISA_NATIVE__
 
 size_t strlen(const char *s) {
-    const char *sc=s;
+   /* const char *sc=s;
 	while(*sc!='\0'){
 		sc++;
 	}
-  	return (sc-s);
+  	return (sc-s);*/
+	int count=0;
+	while(*s){
+		count++;
+		s++;
+	}
+	return count;
 }
 
 char *strcpy(char* dst,const char* src) {
-    char *s=dst;
+   /* char *s=dst;
 	for(s=dst;(*s++=*src++)!='\0';);
-	return (dst);
+	return (dst);*/
+	char *s=dst;
+	while((*dst++=*src++)!='\0');
+	return s;
 }
 
 char* strncpy(char* dst, const char* src, size_t n) {
