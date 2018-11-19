@@ -37,10 +37,15 @@ char* strncpy(char* dst, const char* src, size_t n) {
 }
 
 char* strcat(char* dst, const char* src) {
-	char *s;
+	/*char *s;
 	for(s=dst;*s!='\0';s++);
 	for(;(*s=*src)!='\0';++s,src++);
-  return dst;
+    return dst;*/
+	char *s=dst;
+	while(*dst!='\0')
+		++dst;
+	while((*dst++=*src++)!='\0');
+	return s;
 }
 
 int strcmp(const char* s1, const char* s2) {
@@ -60,7 +65,7 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 		if(*s1!=*s2)
 			return ((*(unsigned char *)s1<*(unsigned char *)s2)?-1:+1);
 		else if(*s1=='\0')
-		     return 0;
+		     return -1;
 	return 0;
 }
 
