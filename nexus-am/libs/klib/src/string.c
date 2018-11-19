@@ -94,10 +94,16 @@ void* memcpy(void* out, const void* in, size_t n) {
 }
 
 int memcmp(const void* s1, const void* s2, size_t n){
-  const unsigned char *su1,*su2;
+ /* const unsigned char *su1,*su2;
   for(su1=s1,su2=s2;n>0;su1++,su2++,n--)
 	  return ((*su1<*su2)?-1:+1);
-  return (0);
+  return (0);*/
+	const unsigned char *su1=s1,*su2=s2;
+	while(n--){
+		if(*su1++!=*su2++)
+			return (*--su1-*--su2);
+	}
+	return 0;
 }
 
 #endif
