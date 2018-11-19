@@ -61,6 +61,7 @@ int strcmp(const char* s1, const char* s2) {
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
+   //may wrong
 	for(;n>0;++s1,++s2,--n)
 		if(*s1!=*s2)
 			return ((*(unsigned char *)s1<*(unsigned char *)s2)?-1:+1);
@@ -78,11 +79,12 @@ void* memset(void* v,int c,size_t n) {
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
-  char *su1;
-  const char *su2;
-  for(su1=out,su2=in;n>0;su1++,su2++,n--)
-       *su1=*su2;
-  return out;
+  void *rett=out;
+  char *su1=(char *)out;
+  const char *su2=(char *)in;
+  for(;n>0;n--)
+       *su1++=*su2++;
+  return rett;
 }
 
 int memcmp(const void* s1, const void* s2, size_t n){
