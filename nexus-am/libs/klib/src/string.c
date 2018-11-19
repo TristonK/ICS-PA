@@ -26,12 +26,14 @@ char *strcpy(char* dst,const char* src) {
 }
 
 char* strncpy(char* dst, const char* src, size_t n) {
-	char *s;
-	for(s=dst;n>0&&*src!='\0';n--)
-		*s++=*src++;
-	while(n--)
-		*s++='\0';
-  return dst;
+	char *s=dst;
+	while(n--){
+		if(*src!='\0')
+			*dst++=*src++;
+		else
+			*dst++='\0';
+	}
+  return s;
 }
 
 char* strcat(char* dst, const char* src) {
