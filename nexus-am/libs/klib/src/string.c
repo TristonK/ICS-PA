@@ -71,14 +71,20 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 }
 
 void* memset(void* v,int c,size_t n) {
-  const unsigned char uc=c;
+ /* const unsigned char uc=c;
   unsigned char *su;
   for(su=v;n>0;su++,n--)
       *su=uc;
+   return v;*/
+   char * su=v;
+   while(n--){
+	   *su++=c;
+   }
    return v;
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
+  //changed
   void *rett=out;
   char *su1=(char *)out;
   const char *su2=(char *)in;
