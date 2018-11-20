@@ -11,7 +11,12 @@ int printf(const char *fmt, ...) {
   va_start(ap,fmt);
   i=vsprintf(pbuf,fmt,ap);
   va_end(ap);
-  _putc(pbuf);
+  int j=0;
+  while(pbuf[j]!='\0'){
+     _putc(pbuf[j]);
+	 j++;
+  }
+  _putc('\0');
   return i;
 }
 
