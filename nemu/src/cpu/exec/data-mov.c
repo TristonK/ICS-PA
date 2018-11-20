@@ -78,10 +78,20 @@ make_EHelper(leave) {
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-	  if(cpu.gpr[0]._16<0)
+	 /* if(cpu.gpr[0]._16<0)
 		  cpu.gpr[2]._16=0xffff;
 	  else
-		  cpu.gpr[2]._16=0;
+		  cpu.gpr[2]._16=0;*/
+	rtl_lr(&t0,R_AX,2);
+	if((int32_t)(int16_t)(uint16_t)t0<0){
+		rtl_li(&t0,0);
+		rtl_addi(&t1,&t0,0xffff);
+		rtl_sr(R_DX,&t1,2);
+	}
+	else{
+		rtl_li(&t0,0);
+		rtl_sr(R_DX,&t0,2);
+	}
   }
   else {
     if(cpu.eax<0)
