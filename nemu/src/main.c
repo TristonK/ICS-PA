@@ -7,7 +7,7 @@ void ui_mainloop(int);
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   int is_batch_mode = init_monitor(argc, argv);
-  FILE *fp=fopen("/home/ksl/ics2018/nemu/tools/gen-expr/input","r");
+/*  FILE *fp=fopen("/home/ksl/ics2018/nemu/tools/gen-expr/input","r");
   //assert(fp!=NULL);
   uint32_t mach,me;
   char ex[500];
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	  printf("answer is WRONG!,right is %u and yours is %u\n",mach,me);cnttt++;}  
 	  }
 printf("you have %d expression get wrong answer.\n",cnttt);
- fclose(fp); 
+ fclose(fp);*/ 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
 
