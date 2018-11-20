@@ -79,15 +79,15 @@ make_EHelper(leave) {
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
 	  if(cpu.gpr[0]._16<0)
-		  cpu.gpr[2]._16=0x0ffff;
+		  cpu.gpr[2]._16=0xffff;
 	  else
 		  cpu.gpr[2]._16=0;
   }
   else {
     if(cpu.eax<0)
-		rtl_li(&cpu.edx,0x0ffffffff);
+		rtl_li(&cpu.edx,0xffffffff);
 	else
-		rtl_li(&cpu.edx,0);
+		rtl_li(&cpu.edx,0x00000000);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
