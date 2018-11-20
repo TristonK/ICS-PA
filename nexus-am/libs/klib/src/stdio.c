@@ -11,7 +11,7 @@ int printf(const char *fmt, ...) {
   va_start(ap,fmt);
   i=vsprintf(pbuf,fmt,ap);
   va_end(ap);
-  //puts(pbuf);
+  _putc(pbuf);
   return i;
 }
 
