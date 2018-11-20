@@ -21,7 +21,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   static char numtrans[16]="0123456789ABCDEF";
   for(str=out;*fmt;fmt++){
 	  if(*fmt!='%'){
-		  *str++=*fmt++;
+		  *str++=*fmt;
 		  continue;
 	  }
 	  ++fmt;
