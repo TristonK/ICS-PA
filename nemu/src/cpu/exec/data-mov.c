@@ -111,8 +111,8 @@ make_EHelper(cwtl) {
   }
   else {
     rtl_lr(&t0,cpu.gpr[0]._16,2);
-	rtl_sext(&t1,&t0,2);
-	rtl_sr(cpu.eax,&t1,4);
+	rtl_sext(&t0,&t0,2);
+	rtl_sr(cpu.eax,&t0,4);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
