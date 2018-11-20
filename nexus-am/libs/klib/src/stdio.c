@@ -51,8 +51,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 		default:;
 	  }
   }
-
-  return 0;
+  *str='\0';
+  return str-out;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
