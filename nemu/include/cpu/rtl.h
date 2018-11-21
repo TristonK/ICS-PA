@@ -170,7 +170,7 @@ static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
   rtl_lm(dest,&reg_l(cpu.esp),4);
-  rtl_addi(&reg_l(cpu.esp),&reg_l(cpu.esp),4);
+  cpu.esp=cpu.esp+4;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
