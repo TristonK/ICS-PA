@@ -27,7 +27,7 @@ size_t video_write(uintptr_t reg, void *buf, size_t size) {
 	  for(i=0;i<size;i++) fb[i]=i;*/
 	  int heigh=screen_height();
 	  int weigh=screen_width();
-	  for(int i=0;i<heigh;i++){
+	  for(int i=0;i<=heigh;i++){
 		  for(int j=0;j<=weigh;j++){
               fb[i*weigh+j]=ctl->pixels[i*weigh+j];
 		  }
