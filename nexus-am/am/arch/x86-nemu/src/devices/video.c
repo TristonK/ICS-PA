@@ -9,9 +9,10 @@ size_t video_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_VIDEO_INFO: {
       _VideoInfoReg *info = (_VideoInfoReg *)buf;
-      info->width = screen_width();
-      info->height = screen_height();
-      return info->width*info->height;//sizeof(_VideoInfoReg);
+	  int ret=inl(0x100);
+      info->width = ret>>16;
+      info->height = ret&0xffff;
+      return sizeof(_VideoInfoReg);
     }
   }
   return 0;
@@ -23,7 +24,7 @@ size_t video_write(uintptr_t reg, void *buf, size_t size) {
       _FBCtlReg *ctl = (_FBCtlReg *)buf;
       int i;
 	  int size=screen_width()*screen_height();
-	  for( i=0;i<size;i++) fb[i]=i;
+	  for(i=0;i<size;i++) fb[i]=i;
       if (ctl->sync) {
         // do nothing, hardware syncs.
       }
