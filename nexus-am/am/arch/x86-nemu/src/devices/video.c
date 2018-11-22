@@ -25,12 +25,15 @@ size_t video_write(uintptr_t reg, void *buf, size_t size) {
       /* int i;
 	  int size=screen_width()*screen_height();
 	  for(i=0;i<size;i++) fb[i]=i;*/
-	  int heigh=screen_height();
+	 // int heigh=screen_height();
 	  int weigh=screen_width();
+	  int x=ctl->x;
+	  int y=ctl->y;
 	  int w=ctl->w;
-	  for(int i=0;i<=heigh;i++){
-		  for(int j=0;j<weigh;j++){
-              fb[i*weigh+j]=ctl->pixels[i*w+j];
+	  int h=ctl->h;
+	  for(int i=0;i<h;i++){
+		  for(int j=0;j<w;j++){
+              fb[x+j+(y+i)*weigh]=ctl->pixels[i*w+j];//x+j+(y+i)*s_wi=*(pix+cnt)
 		  }
 	   }
       if (ctl->sync) {
