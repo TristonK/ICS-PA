@@ -11,7 +11,7 @@ size_t video_read(uintptr_t reg, void *buf, size_t size) {
       _VideoInfoReg *info = (_VideoInfoReg *)buf;
       info->width = screen_width();
       info->height = screen_height();
-      return sizeof(_VideoInfoReg);
+      return info->width*info->height;//sizeof(_VideoInfoReg);
     }
   }
   return 0;
