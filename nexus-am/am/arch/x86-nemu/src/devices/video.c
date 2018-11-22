@@ -29,7 +29,7 @@ size_t video_write(uintptr_t reg, void *buf, size_t size) {
 	  int weigh=screen_width();
 	  for(int i=0;i<=heigh;i++){
 		  for(int j=0;j<=weigh;j++){
-              fb[i*weigh+j]=ctl->pixels[i*weigh+j];
+              fb[i*weigh+j]=ctl->pixels[i*(ctl->w)+j];
 		  }
 	   }
       if (ctl->sync) {
