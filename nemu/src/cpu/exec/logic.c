@@ -90,7 +90,7 @@ make_EHelper(rol){
    rtl_mv(&t0,&id_src->val);
    while(t0!=0){
      rtl_msb(&t1,&id_dest->val,1);
-	 id_dest->val = (id_dest->val*2+t1)&0xff;
+	 id_dest->val = (id_dest->val*2+t1);//&0xff;
 	 t0=t0-1;
    } 
 }
