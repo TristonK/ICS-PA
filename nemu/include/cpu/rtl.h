@@ -12,7 +12,7 @@ void decoding_set_jmp(bool is_jmp);
 bool interpret_relop(uint32_t relop, const rtlreg_t src1, const rtlreg_t src2);
 
 /* RTL basic instructions */
- void interpret_rtl_li(rtlreg_t* dest, uint32_t imm) {
+static inline void interpret_rtl_li(rtlreg_t* dest, uint32_t imm) {
 
   *dest = imm;
 }
