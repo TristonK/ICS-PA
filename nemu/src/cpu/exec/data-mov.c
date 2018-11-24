@@ -79,9 +79,9 @@ make_EHelper(leave) {
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
 	 if(cpu.gpr[0]._16<0)
-		  cpu.gpr[2]._16=0xffff;
+		  cpu.edx |=0x0000ffff;
 	  else
-		  cpu.gpr[2]._16=0;
+		  cpu.edx &= 0xffff0000;
   }
   else {
     if(cpu.eax<0)
@@ -89,7 +89,6 @@ make_EHelper(cltd) {
 	else
 		rtl_li(&cpu.edx,0x0000000);
   }
-
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
 }
 
