@@ -6,12 +6,9 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include<stdarg.h>
+
 void cpu_exec(uint64_t);
-WP* new_wp();
-void info_w();
-void delete_wp(int a);
-extern uint32_t  expr(char *e,bool *success);
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -29,107 +26,81 @@ char* rl_gets() {
 
   return line_read;
 }
-static int cmd_p(char *args){
 
-	bool success=1;
-	uint32_t ans=(unsigned)expr(args,&success);
-	if(success==false)printf("error");
-	else {
-		printf("d:%u   x:%x\n",ans,ans);
-	}
-	return 0;
-}
-static int cmd_d(char *args){
-	int a;
-	if(sscanf(args,"%d",&a))delete_wp(a);
-	else printf("watchpoint to be deleted should be its number lable\n");
-	return 0;	
-}
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
-static int cmd_w(char *args){
-	bool success=1;
-	uint32_t ans=(unsigned)expr(args,&success);
-	if(success==false)printf("expression evaluate fail\n");
-	else {
-		WP *ptr=new_wp();
-		strcpy(ptr->exp,args);
-		ptr->oldvalue=ans;
-		printf("set a watchpoint: number %d\t %s\n",ptr->NO,args);
-	}
-	return 0 ;
-}
+
 static int cmd_q(char *args) {
   return -1;
 }
+
 static int cmd_si(char *args) {
-/*	int a=0;	
- 	char *b=args;	
-	 a=sscanf(args,"%[1-9]",b);
-	if(a==0)cpu_exec(1);
-	else {
-		sscanf(b,"%d",&a);
-		cpu_exec(a);
-	}
-	return 0;
-*/
-	if(args==NULL){cpu_exec(1);return 0;}
-	int b=1;
-	sscanf(args,"%d",&b);
-	cpu_exec(b);
+	int N;
+	if(args==NULL) 
+		N=1;
+	sscanf(args,"%d",&N);
+	cpu_exec(N);
 	return 0;
 }
-static int cmd_x(char *args){
-	char *arg=args;
-	char *ptr=NULL;
-	if(arg==NULL)printf("Argument required (starting display address).\n");
-	else  {
-		vaddr_t  addr;
-		ptr=strtok(arg," ");
-		ptr=strtok(NULL,"\0");
-		if(ptr==NULL){
-			sscanf(arg,"%x",&addr);
-			printf("0x%x:  0x%.8x\n",addr,vaddr_read(addr,4));	
-		}
-		else {
-			int len;
-			sscanf(arg,"%d",&len);
-			sscanf(ptr,"%x",&addr);
-			for(int i=0;i<len;i++){
-				printf("0x%x:  %.8x\t",addr,vaddr_read(addr,4));
-				addr=addr+4;
-				if(i%4==3)putchar('\n');
-			}
-		}
-	}
-	return 0;	
-}
-	CPU_state cpu;
 
 static int cmd_info(char *args){
-	if(strcmp(args,"r")==0){
-	printf("eax\t0x%.8x   %10d\n",cpu.eax,cpu.eax);
-	printf("ebx\t0x%.8x   %10d\n",cpu.ebx,cpu.ebx);
-	printf("ecx\t0x%.8x   %10d\n",cpu.ecx,cpu.ecx);
-	printf("edx\t0x%.8x   %10d\n",cpu.edx,cpu.edx);
-	printf("esi\t0x%.8x   %10d\n",cpu.esi,cpu.esi);
-	printf("edi\t0x%.8x   %10d\n",cpu.eax,cpu.edi);
-	printf("ebp\t0x%.8x   %10d\n",cpu.ebp,cpu.ebp);
-	printf("esp\t0x%.8x   %10d\n",cpu.esp,cpu.esp);
-	printf("eip\t0x%.8x   %10d\n",cpu.eip,cpu.eip);
-	printf("ebp\t0x%.8x   %10d\n",cpu.ebp,cpu.ebp);
-	}
-        else if(strcmp(args,"w")==0){
-	info_w();
-	}
-	return 0;
+	if (args[0]=='r'){
+		for(int i=R_EAX;i<=R_EDI;i++){
+			printf("%s: 0x%08x\n",regsl[i],reg_l(i));
+	 	 	} 
+		printf("eip: 0x%08x\n",cpu.eip);
+	 	}
+	else if(args[0]=='w'){
+		infopoint();
+		} 
+	return 0; 
 }
+
+static int cmd_x(char *args){
+	int n;
+    vaddr_t addre;
+	strtok(args," ");
+	char *N =strtok(args," ");
+	sscanf(N,"%d",&n);
+	args= N+strlen(N)+1;
+    sscanf(args,"%x",&addre);
+     for(int i=0;i<n;i++) { 
+		printf("0x%04x ",vaddr_read(addre,4));
+		addre+=4;
+		}
+	printf("\n");
+	return 0;  
+}
+
+static int cmd_w(char *args){
+	WP *p =new_up(args);
+    printf("we have set the watchpoint, the index is %d and the val is %d\n",p->NO,p->val);
+	return 0; 
+	}
+static int cmd_d(char *args){
+	int no;
+	no=atoi(args);
+    delete_wp(no);
+	printf("we have delete the watchpoint with no.%d\n",no);
+	return 0;
+	}
 static int cmd_help(char *args);
 
-
-
+static int cmd_p(char *args){
+	uint32_t ans;
+	bool succ;
+	succ=1;
+//	printf("get");
+	ans=expr(args,&succ);
+//	printf("111");
+	if(succ)
+		printf("%d\n",ans);
+	else 
+		assert(0);
+	return 0;
+	}
 static struct {
   char *name;
   char *description;
@@ -138,12 +109,12 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Execute just one instruction of the program",cmd_si},
-  { "x", "Scan memory",cmd_x},
-  { "info", "print program or regs' information",cmd_info},
-  {"p","calculate value of the given expression",cmd_p}, 
-  {"w","set a watchpoint",cmd_w},
-  {"d","delete a watchpoint",cmd_d},
+  { "si", "excute n steps",cmd_si},
+  { "info", "Print the status",cmd_info},
+  { "x", "scan the memory",cmd_x},
+  { "p", "calculate the expression", cmd_p},
+  { "w", "set the watchpoint", cmd_w},
+  { "d", "delete the watchpoint with the index", cmd_d}
   /* TODO: Add more commands */
 
 };
