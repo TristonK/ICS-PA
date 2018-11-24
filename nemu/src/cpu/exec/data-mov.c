@@ -88,7 +88,8 @@ make_EHelper(cltd) {
 		//rtl_li(&cpu.edx,0xffffffff);
 		cpu.edx|=0xffffffff;
 	else
-		rtl_li(&cpu.edx,0x0000000);
+		//rtl_li(&cpu.edx,0x0000000);
+		cpu.edx=0;
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
