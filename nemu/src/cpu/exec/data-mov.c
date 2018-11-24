@@ -71,8 +71,8 @@ make_EHelper(popa) {
 }
 
 make_EHelper(leave) {
- // rtl_mv(&cpu.esp,&cpu.ebp);
-  cpu.esp=cpu.ebp;
+  rtl_mv(&cpu.esp,&cpu.ebp);
+ // cpu.esp=cpu.ebp;
   rtl_pop(&cpu.ebp);
   print_asm("leave");
 }
@@ -92,11 +92,11 @@ make_EHelper(cltd) {
 	rtl_msb(&t0,&cpu.eax,4);
 	if(t0==1)
    // if(cpu.eax<0)
-		//rtl_li(&cpu.edx,0xffffffff);
-		cpu.edx|=0xffffffff;
+		rtl_li(&cpu.edx,0xffffffff);
+		//cpu.edx|=0xffffffff;
 	else
-		//rtl_li(&cpu.edx,0x0000000);
-		cpu.edx=0;
+		rtl_li(&cpu.edx,0x0000000);
+	//	cpu.edx=0;
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
