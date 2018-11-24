@@ -104,14 +104,18 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    rtl_lr(&t0,cpu.gpr[0]._8[0],1);
-	rtl_sext(&t1,&t0,1);
-	rtl_sr(cpu.gpr[0]._16,&t1,2);
+  //  rtl_lr(&t0,cpu.gpr[0]._8[0],1);
+      rtl_lr(&t0,R_AL,1);
+  	  rtl_sext(&t1,&t0,1);
+	  rtl_sr(R_AX,&t1,2);
+//	rtl_sr(cpu.gpr[0]._16,&t1,2);
   }
   else {
-    rtl_lr(&t0,cpu.gpr[0]._16,2);
-	rtl_sext(&t0,&t0,2);
-	rtl_sr(cpu.eax,&t0,4);
+   // rtl_lr(&t0,cpu.gpr[0]._16,2);
+      rtl_lr(&t0,R_AX,2);
+  	  rtl_sext(&t0,&t0,2);
+//	rtl_sr(cpu.eax,&t0,4);
+ rtl_sr(R_EAX,&t1,4);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
