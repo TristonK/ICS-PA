@@ -42,11 +42,13 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
-	t0=instr_fetch(eip,op->width);
-	rtl_sext(&t1,&t0,op->width);
-	op->simm=t1;
- // TODO();
-
+  op->simm=instr_fetch(eip,op->width);
+  if(op->width==1){
+   op->simm=(op->simm << 24)>>24;
+  }
+  /*rtl_li(&t0,op->simm);
+  rtl_sext(&t0,&t0,op->width);
+  op->simm=t0;*/
   rtl_li(&op->val, op->simm);
 
 #ifdef DEBUG
@@ -139,8 +141,6 @@ make_DHelper(lea_M2G) {
   decode_op_rm(eip, id_src, false, id_dest, false);
 }
 
-		
-
 /* AL <- Ib
  * eAX <- Iv
  */
@@ -181,13 +181,6 @@ make_DHelper(I2r) {
 make_DHelper(mov_I2r) {
   decode_op_r(eip, id_dest, false);
   decode_op_I(eip, id_src, true);
-}
-/*Av*/
-make_DHelper(call_rel){
-	
-	decode_op_SI(eip,id_dest,true);
-	decoding.jmp_eip=id_dest->simm+ *eip;
-
 }
 
 /* used by unary operations */
@@ -335,8 +328,6 @@ make_DHelper(out_a2dx) {
   sprintf(id_dest->str, "(%%dx)");
 #endif
 }
-//Ev-Ib
-
 
 void operand_write(Operand *op, rtlreg_t* src) {
   if (op->type == OP_TYPE_REG) { rtl_sr(op->reg, src, op->width); }
