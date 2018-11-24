@@ -81,9 +81,11 @@ make_EHelper(cltd) {
 	 rtl_msb(&t0,&cpu.eax,2);
 	 if(t0==1)
 	 // if(cpu.gpr[0]._16<0)
-		  cpu.gpr[2]._16|=0xffff;
+		 // cpu.gpr[2]._16|=0xffff;
+		 cpu.edx |=0x0000ffff;
 	  else
-		  cpu.gpr[2]._16=0;
+		 // cpu.gpr[2]._16=0;
+		 cpu.edx &=0xffff0000;
   }
   else {
 	rtl_msb(&t0,&cpu.eax,4);
