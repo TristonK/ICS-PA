@@ -72,31 +72,22 @@ make_EHelper(popa) {
 
 make_EHelper(leave) {
   rtl_mv(&cpu.esp,&cpu.ebp);
- // cpu.esp=cpu.ebp;
   rtl_pop(&cpu.ebp);
   print_asm("leave");
 }
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-	// rtl_msb(&t0,&cpu.eax,2);
-	// if(t0==1)
 	  if(cpu.gpr[0]._16<0)
 		  cpu.gpr[2]._16|=0xffff;
-		// cpu.edx |=0x0000ffff;
 	  else
 		  cpu.gpr[2]._16=0;
-		// cpu.edx &=0xffff0000;
   }
   else {
-//	rtl_msb(&t0,&cpu.eax,4);
-//	if(t0==1)
     if(cpu.eax<0)
 		rtl_li(&cpu.edx,0xffffffff);
-		//cpu.edx|=0xffffffff;
 	else
 		rtl_li(&cpu.edx,0x0000000);
-	//	cpu.edx=0;
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
@@ -113,9 +104,9 @@ make_EHelper(cwtl) {
   else {
    // rtl_lr(&t0,cpu.gpr[0]._16,2);
       rtl_lr(&t0,R_AX,2);
-  	  rtl_sext(&t0,&t0,2);
-//	rtl_sr(cpu.eax,&t0,4);
- rtl_sr(R_EAX,&t1,4);
+  	  rtl_sext(&t1,&t0,2);
+//	rtl_sr(cpu.eax,&t1,4);
+     rtl_sr(R_EAX,&t1,4);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
