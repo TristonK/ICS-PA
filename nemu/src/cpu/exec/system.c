@@ -4,7 +4,7 @@ void difftest_skip_ref();
 void difftest_skip_dut();
 
 make_EHelper(lidt) {
-  TODO();
+  rtl_li(&cpu.idtr,id_dest->val);
 
   print_asm_template1(lidt);
 }
@@ -26,7 +26,7 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  TODO();
+  raise_intr(id_dest->val,cpu.eip+2);
 
   print_asm("int %s", id_dest->str);
 

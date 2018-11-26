@@ -46,16 +46,13 @@ typedef struct {
 		 };
 	uint32_t eflags;
 	 };
+  rtlreg_t cs;
+  rtlreg_t idtr;
 } CPU_state;
 
 extern CPU_state cpu;
 
 static inline int check_reg_index(int index) {
-  //my
-  if(index<0||index>=8){
-	  Log();
-	  printf("%d\n",index);}
-  //my
   assert(index >= 0 && index < 8);
   return index;
 }
