@@ -15,7 +15,9 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
   rtl_addi(&t0,&t0,4);
   rtl_lm(&t2,&t0,4);
   t0=(t1&0x0000ffff)|(t2&0xffff0000);
-  rtl_j(t0);  
+//  rtl_j(t0); 
+  decoding.jmp_eip=t0;
+ decoding.is_jmp=1; 
 }
 
 void dev_raise_intr() {
