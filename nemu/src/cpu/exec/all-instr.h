@@ -26,8 +26,6 @@ make_EHelper(ret);
 make_EHelper(jmp);
 make_EHelper(lea);
 make_EHelper(not);
-/*make_EHelper(pusha);
-make_EHelper(popa);*/
 make_EHelper(cltd);
 make_EHelper(cwtl);
 make_EHelper(imul1);
@@ -51,3 +49,5 @@ make_EHelper(in);
 make_EHelper(out);
 make_EHelper(int);
 make_EHelper(lidt);
+make_EHelper(pusha);
+make_EHelper(popa);
