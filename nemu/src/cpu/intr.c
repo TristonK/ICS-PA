@@ -18,8 +18,8 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  // rtl_j(t0); 
   decoding.jmp_eip=t0;
  // decoding.is_jmp=1; 
-//  rtl_j(decoding.jmp_eip);
-  decoding_set_jmp(true);
+  rtl_j(decoding.jmp_eip);
+ // decoding_set_jmp(true);
 }
 
 void dev_raise_intr() {
