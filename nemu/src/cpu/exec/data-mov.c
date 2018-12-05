@@ -20,7 +20,7 @@ make_EHelper(pop) {
 
 make_EHelper(pusha) {
 //	TODO();
-/*  if(decoding.is_operand_size_16){
+ /* if(decoding.is_operand_size_16){
 	  t0=cpu.gpr[4]._16;
 	  rtl_push(&cpu.gpr[0]._16);
 	  rtl_push(&cpu.gpr[1]._16);
@@ -46,7 +46,7 @@ make_EHelper(pusha) {
 
 make_EHelper(popa) { 
 //	TODO();
-/*  if(decoding.is_operand_size_16){
+ /* if(decoding.is_operand_size_16){
 	  rtl_pop(&cpu.gpr[7]._16);
 	  rtl_pop(&cpu.gpr[6]._16);
 	  rtl_pop(&cpu.gpr[5]._16);
@@ -65,7 +65,7 @@ make_EHelper(popa) {
 	  rtl_pop(&cpu.edx);
 	  rtl_pop(&cpu.ecx);
 	  rtl_pop(&cpu.eax);
- // }
+// }
   print_asm("popa");
 }
 
