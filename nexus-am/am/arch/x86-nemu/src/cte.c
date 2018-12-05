@@ -10,7 +10,8 @@ void vectrap();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
-  _Context *next = tf;
+  printf("go here");
+	_Context *next = tf;
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
