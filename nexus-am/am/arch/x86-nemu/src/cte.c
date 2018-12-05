@@ -11,6 +11,7 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   //printf("go here");
+  printf("%d",tf->eax);
 	_Context *next = tf;
   if (user_handler) {
     _Event ev;
@@ -24,7 +25,7 @@ _Context* irq_handle(_Context *tf) {
       next = tf;
     }
   }
-  printf("is go");
+ // printf("is go");
  // printf("%d",tf->eax);
   return next;
 }
