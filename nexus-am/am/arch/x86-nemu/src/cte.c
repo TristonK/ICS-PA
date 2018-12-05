@@ -23,7 +23,7 @@ _Context* irq_handle(_Context *tf) {
       next = tf;
     }
   }
-  printf("%x",tf->eax);
+  printf("%d",tf->eax);
   return next;
 }
 
