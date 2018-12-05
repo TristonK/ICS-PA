@@ -23,6 +23,7 @@ _Context* irq_handle(_Context *tf) {
       next = tf;
     }
   }
+  printf("is go");
   printf("%d",tf->eax);
   return next;
 }
