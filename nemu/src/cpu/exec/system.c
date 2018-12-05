@@ -4,7 +4,7 @@ void difftest_skip_ref();
 void difftest_skip_dut();
 
 make_EHelper(lidt) {
-	printf("%x  *\n",id_dest->val);
+//	printf("%x  *\n",id_dest->val);
   rtl_li(&cpu.idtr,id_dest->val);
 
   print_asm_template1(lidt);
