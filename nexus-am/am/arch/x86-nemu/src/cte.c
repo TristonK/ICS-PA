@@ -10,7 +10,7 @@ void vectrap();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
-  printf("go here");
+  //printf("go here");
 	_Context *next = tf;
   if (user_handler) {
     _Event ev;
@@ -25,7 +25,7 @@ _Context* irq_handle(_Context *tf) {
     }
   }
   printf("is go");
-  printf("%d",tf->eax);
+ // printf("%d",tf->eax);
   return next;
 }
 
