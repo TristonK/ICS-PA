@@ -1,7 +1,7 @@
 #include <am.h>
 #include <x86.h>
 //my
-#include <stdio.h>
+#include <klib.h>
 //my
 
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
@@ -23,7 +23,7 @@ _Context* irq_handle(_Context *tf) {
       next = tf;
     }
   }
- // printf("%x",*tf);
+  printf("%x",*tf);
   return next;
 }
 
