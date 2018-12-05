@@ -19,6 +19,8 @@ _Context* irq_handle(_Context *tf) {
   printf("6   %d\n ",tf->edx);
   printf("7   %d\n ",tf->ecx);
   printf("8   %d\n ",tf->eax);
+  printf("err %d \n", tf->err);
+  printf("irq %d\n",tf->irq);
   printf("eip %d\n",tf->eip);
 	_Context *next = tf;
   if (user_handler) {
