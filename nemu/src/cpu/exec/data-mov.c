@@ -32,8 +32,9 @@ make_EHelper(pusha) {
 	  rtl_push(&cpu.gpr[7]._16);
   }
   else {*/
-      t0=cpu.esp;
-	  rtl_push(&cpu.eax);
+   //   t0=cpu.esp;
+	  rtl_mv(&t0,&cpu.esp); 
+      rtl_push(&cpu.eax);
       rtl_push(&cpu.ecx);
 	  rtl_push(&cpu.edx);
 	  rtl_push(&cpu.ebx);
