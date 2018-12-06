@@ -9,7 +9,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
   rtl_push(&cpu.cs);
   rtl_li(&t0,ret_addr);
   rtl_push(&t0);
-  rtl_li(&t0,cpu.idtr);
+  rtl_li(&t0,cpu.idtr.base);
   rtl_addi(&t0,&t0,NO*8);
   rtl_lm(&t1,&t0,4);
   rtl_addi(&t0,&t0,4);

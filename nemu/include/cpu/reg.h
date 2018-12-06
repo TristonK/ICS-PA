@@ -47,7 +47,10 @@ typedef struct {
 	uint32_t eflags;
 	 };
   rtlreg_t cs;
-  rtlreg_t idtr;
+  struct{
+	  uint16_t limit;
+	  uint32_t base;
+  }idtr;
 } CPU_state;
 
 extern CPU_state cpu;

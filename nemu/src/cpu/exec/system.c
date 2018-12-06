@@ -7,9 +7,9 @@ make_EHelper(lidt) {
 //	printf("%x  *\n",id_dest->val);
  // rtl_li(&cpu.idtr,id_dest->val);
 if(id_dest->width==2)
-	cpu.idtr=vaddr_read(id_dest->addr+2,4)&&0x00ffffff;
+	cpu.idtr.base=vaddr_read(id_dest->addr+2,4)&&0x00ffffff;
 else if(id_dest->width==4)
-	cpu.idtr=vaddr_read(id_dest->addr+2,4);
+	cpu.idtr.base=vaddr_read(id_dest->addr+2,4);
 
 
 
