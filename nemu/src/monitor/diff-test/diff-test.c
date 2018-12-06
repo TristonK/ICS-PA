@@ -76,6 +76,10 @@ void difftest_step(uint32_t eip) {
 //  Log("zf nemu %d qemu %d",cpu.ZF,ref_r.ZF);
   // Log("done eax nemu %#x qemu %#x\n",cpu.eax,ref_r.eax); 
 // Log("ebx+0x1002e4 nemu %#x qemu %#x",cpu.ebx,ref_r.ebx);
+ if(cpu.eip==0x1004c0){
+   Log("eax %x \n",cpu.eax);
+ 
+ }
   if(ref_r.eax != cpu.eax){
 		 Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);	  
 		  nemu_state = NEMU_ABORT;
