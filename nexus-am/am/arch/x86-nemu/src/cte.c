@@ -11,7 +11,7 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   //printf("go here");
- /* printf("1   %d\n ",tf->edi);
+  printf("1   %d\n ",tf->edi);
   printf("2   %d\n ",tf->esi);
   printf("3   %d\n ",tf->ebp);
   printf("4   %d\n ",tf->esp);
@@ -21,7 +21,7 @@ _Context* irq_handle(_Context *tf) {
   printf("8   %d\n ",tf->eax);
   printf("err %d \n", tf->err);
   printf("irq %d\n",tf->irq);
-  printf("eip %d\n",tf->eip);*/
+  printf("eip %d\n",tf->eip);
 	_Context *next = tf;
   if (user_handler) {
     _Event ev;
