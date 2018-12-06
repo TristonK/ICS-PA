@@ -76,7 +76,7 @@ void difftest_step(uint32_t eip) {
 //  Log("zf nemu %d qemu %d",cpu.ZF,ref_r.ZF);
   // Log("done eax nemu %#x qemu %#x\n",cpu.eax,ref_r.eax); 
 // Log("ebx+0x1002e4 nemu %#x qemu %#x",cpu.ebx,ref_r.ebx);
- if(cpu.eip==0x100677){
+ if(cpu.eip==0x1005d3){
    Log("eax %x \n ecx %x\n edx %x\n ebx %x\n esp %x\n ebp %x\n esi %x\n edi %x \n",
 		   cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,cpu.esi,cpu.edi);
  
