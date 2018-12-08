@@ -11,19 +11,19 @@ FSIMG_PATH = $(NAVY_HOME)/fsimg
 RAMDISK_FILE = build/ramdisk.img
 
 OBJCOPY_FLAG = -S --set-section-flags .bss=alloc,contents -O binary
-OBJCOPY_APP = $(NAVY_HOME)/tests/dummy
+#OBJCOPY_APP = $(NAVY_HOME)/tests/dummy
+OBJCOPY_APP = $(NAVY_HOME)/tests/hello
 OBJCOPY_FILE = $(OBJCOPY_APP)/build/$(notdir $(OBJCOPY_APP))-$(ISA)
 
 .PHONY: update update-ramdisk-objcopy update-ramdisk-fsimg update-fsimg
 
 update-ramdisk-objcopy:
-	$(MAKE) -s -C $(OBJCOPY_APP) ISA=$(ISA)
-	$(OBJCOPY) $(OBJCOPY_FLAG) $(OBJCOPY_FILE) $(RAMDISK_FILE)
-	touch src/files.h
+		$(MAKE) -s -C $(OBJCOPY_APP) ISA=$(ISA)
+		$(OBJCOPY) $(OBJCOPY_FLAG) $(OBJCOPY_FILE) $(RAMDISK_FILE)
+		touch src/files.h
 
 update-fsimg:
 	$(MAKE) -s -C $(NAVY_HOME) ISA=$(ISA)
-
 update-ramdisk-fsimg: update-fsimg
 	$(eval FSIMG_FILES := $(shell find $(FSIMG_PATH) -type f))
 	@for f in $(FSIMG_FILES); do \
@@ -37,5 +37,6 @@ update-ramdisk-fsimg: update-fsimg
 src/syscall.h: $(NAVY_HOME)/libs/libos/src/syscall.h
 	ln -sf $^ $@
 
-update: update-ramdisk-objcopy src/syscall.h
+#update: update-ramdisk-objcopy src/syscall.h
+update: update-ramdisk-fsimg src/syscall.h
 	@touch src/initrd.S
