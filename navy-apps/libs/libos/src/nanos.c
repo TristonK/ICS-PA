@@ -40,8 +40,10 @@ int _write(int fd, void *buf, size_t count){
 void* program_end= &_end;
 void *_sbrk(intptr_t increment){
    // program_end += increment;
+    void * ret= program_end;
 	program_end=(program_end+increment);
-	return  _syscall_(SYS_brk,(intptr_t)program_end,0,0);
+    _syscall_(SYS_brk,(intptr_t)program_end,0,0);
+    return ret;
 	// return (void *)-1;
 }
 
