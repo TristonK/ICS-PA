@@ -10,7 +10,7 @@ _Context* do_syscall(_Context *c) {
  // Log("%d  %d  %d  %d\n",a[0],a[1],a[2],a[3]);
   switch (a[0]) {
 	case SYS_exit: _halt(0);break;
-	case SYS_yield: _yield();/*c->GPR1=0*/;break;
+	case SYS_yield: _yield();c->GPR1=0;break;
     case SYS_write: 
   	default: panic("Unhandled syscall ID = %d", a[0]);
   }
