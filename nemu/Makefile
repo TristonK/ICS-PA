@@ -41,8 +41,21 @@ $(OBJ_DIR)/%.o: src/%.c
 .PHONY: app run clean
 app: $(BINARY)
 
+# set testcase by yourself
+TESTCASE=dummy
+
+TESTBIN=$(AM_HOME)/tests/cputest/build/$(TESTCASE)-x86-nemu.bin
+QEMU_SO=$(NEMU_HOME)/tools/qemu-diff/build/qemu-so
+
+$(QEMU_SO): $(wildcard $(abspath $(QEMU_SO)/../../src)/*.c)
+	cd $(abspath $(@D)/..) && make
+
+$(TESTBIN): $(abspath $(TESTBIN)/../..)/tests/$(TESTCASE).c
+	cd $(abspath $(@D)/..) && make ARCH=x86-nemu ALL=$(TESTCASE)
+
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
-override ARGS += -d $(NEMU_HOME)/tools/qemu-diff/build/qemu-so
+override ARGS += -d $(QEMU_SO)
+override ARGS += $(TESTBIN)
 
 # Command to execute NEMU
 NEMU_EXEC := $(BINARY) $(ARGS)
@@ -52,11 +65,11 @@ $(BINARY): $(OBJS)
 	@echo + LD $@
 	@$(LD) -O2 -rdynamic $(SO_LDLAGS) -o $@ $^ -lSDL2 -lreadline -ldl
 
-run: $(BINARY)
+run: $(BINARY) $(TESTBIN) $(QEMU_SO)
 	$(call git_commit, "run")
 	$(NEMU_EXEC)
 
-gdb: $(BINARY)
+gdb: $(BINARY) $(TESTBIN) $(QEMU_SO)
 	$(call git_commit, "gdb")
 	gdb -s $(BINARY) --args $(NEMU_EXEC)
 
@@ -64,5 +77,3 @@ clean:
 	-rm -rf $(BUILD_DIR)
 	$(MAKE) -C tools/gen-expr clean
 	$(MAKE) -C tools/qemu-diff clean
-count:
-	find . -name "*.c" -or -name *.h |xargs wc -l
