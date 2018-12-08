@@ -21,9 +21,11 @@ _Context* do_syscall(_Context *c) {
 	      _putc((char)*((char*)(buf+i)));
 	   }
 	}
+	Log();
 	//c->GPR1=ret;
     break;	
 	//******************
+	case SYS_brk: break;
   	default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
