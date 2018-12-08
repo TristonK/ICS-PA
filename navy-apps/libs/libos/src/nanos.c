@@ -33,8 +33,9 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count){
-  _exit(SYS_write);
-  return 0;
+   int  ret= _syscall_(SYS_write,fd,(intptr_t)buf,count);
+	//  _exit(SYS_write);
+  return ret;
 }
 
 void *_sbrk(intptr_t increment){
@@ -60,7 +61,6 @@ int _execve(const char *fname, char * const argv[], char *const envp[]) {
   _exit(SYS_execve);
   return 0;
 }
-
 // The code below is not used by Nanos-lite.
 // But to pass linking, they are defined as dummy functions
 
