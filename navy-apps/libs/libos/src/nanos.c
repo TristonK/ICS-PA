@@ -41,7 +41,7 @@ void* program_end= &_end;
 void *_sbrk(intptr_t increment){
    // program_end += increment;
 	program_end=(program_end+increment);
-	return  _syscall(SYS_brk,(intptr_t)program_end,0,0);
+	return  _syscall_(SYS_brk,(intptr_t)program_end,0,0);
 	// return (void *)-1;
 }
 
