@@ -7,51 +7,85 @@
 
 // this should be enough
 static char buf[65536];
-int size=0;
-int rannum=0;
 int cnt=0;
-char gen_rand_op();
-static inline void gen_rand_expr() {
-  srand(time(0)+rannum);
-  rannum++;
-  int t=rand()%3;
-  if(t==1)buf[size++]=' ';
-  if(size>=60000)return ;
-  int d;
-  if (cnt>=100)t=0;
-  
-  switch(t){
-  	case 0: d=rand()%0x200;
-		size+=sprintf(&buf[size],"%d",d);
-		cnt++;
-	      break;
-	case 1:buf[size++]='(';cnt++;gen_rand_expr();buf[size++]=')';break;
-	case 2 :cnt++;gen_rand_expr();buf[size++]=gen_rand_op();cnt++;gen_rand_expr();break;
-  	default:break;
-  }
-  if(t==2)buf[size++]=' ';
-
+int linee=0;
+/*void restart(){
+	if(cnt>=65536){
+		memset(buf,'\0',sizeof(buf));
+		cnt=0;
+		gen_rand_expr();
+		}
+	}*/
+uint32_t choose(uint32_t n){
+	return rand()%n;
 }
+void gen_notype(){
+	switch(choose(20)){
+		case 1:buf[cnt]=' ',cnt++;break;
+		case 2:buf[cnt]=' ',cnt++;buf[cnt]=' ';cnt++;break;
+		default:break;
+		}
+	}
+void gen(char s){
+	gen_notype();
+	buf[cnt]=s;
+	cnt++;
+	gen_notype();
+	//restart();
+}
+void gen_rand_op(){
+   switch(choose(4)){
+	   case 0: buf[cnt]='+';break;
+	   case 1: buf[cnt]='-';break;
+	   case 2: buf[cnt]='*';break;
+       default: buf[cnt]='/';break;
+	   }
+	linee++;
+	cnt++;
+	gen_notype();
+	//restart();
+}
+void gen_num(){
+	gen_notype();
+	uint32_t numb=rand()%100;
+	sprintf(buf+cnt,"%d",numb);
+	if(numb==0){
+		cnt++;
+		return;
+		}
+	while(numb!=0){
+		cnt++;
+		numb/=10;
+		}
+	gen_notype();
+	//restart();
+}	
+static inline void gen_rand_expr() {
+ // buf[0] = '\0';
+ // linee++;
+  /*if(linee>3){
+	  gen_num();
+	  buf[cnt]='\0';
+	  return;
+	  }*/
+  uint32_t sele=choose(3);
+  if(linee>3) sele=0;
+  switch(sele){
+	  case 0: gen_num();break;
+	  case 1: gen('(');gen_rand_expr();gen(')');break;
+	  default:gen_rand_expr();gen_rand_op();gen_rand_expr();break;
+	  }
 
-char gen_rand_op()
-{
-	srand(time(0)+rannum);
-	rannum++;
-	int t=rand()%4;
-	switch(t){
-  	case 0:return '+';
-	case 1:return '-';
-	case 2:return '*';
-	default :return '/';
-  }
+	  //buf[cnt++]='1';
+   buf[cnt]='\0';
 }
 
 static char code_buf[65536];
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned  result = %s; "
-"  printf(\"%%u\\n\", result); "
+"  unsigned result = %s; "
+"  printf(\"%%u\", result); "
 "  return 0; "
 "}";
 
@@ -61,13 +95,13 @@ int main(int argc, char *argv[]) {
   int loop = 1;
   if (argc > 1) {
     sscanf(argv[1], "%d", &loop);
-  }
+  } 
   int i;
   for (i = 0; i < loop; i ++) {
-	  size=0;cnt=0;
-	  memset(buf,0,sizeof(buf));
-	memset(code_buf,0,sizeof(code_buf));
-      	  gen_rand_expr();
+    cnt=0;
+	linee=0;
+	memset(buf,'\0',sizeof(buf));
+	gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
 
@@ -80,18 +114,23 @@ int main(int argc, char *argv[]) {
     if (ret != 0) continue;
 
     fp = popen("./.expr", "r");
-
+	char jegee[65536];
+    memset(jegee,'\0',sizeof(jegee));
+	if(fread(jegee,1,12,fp)==0){
+		i--;
+		continue;
+		}   
     assert(fp != NULL);
-	 char check[32];
-		 memset(check,'\0',sizeof(check));
-    fread(check,1,12,fp);
-	if(check[0]=='\0'){continue;}
+   /* int jugde;
+	if(fscanf(fp,"%d",&jugde)==-1){
+		i--;
+		continue;
+		}*/
     int result;
-    sscanf(check,"%d",&result);
-   // fscanf(fp, "%d", &result);
+    sscanf(jegee, "%u", &result);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
-  }
+  } 
   return 0;
 }
