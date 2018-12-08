@@ -1,7 +1,7 @@
 #include "proc.h"
 
 #define MAX_NR_PROC 4
-
+void naive_uload(PCB *pcb, const char *filename);
 static PCB pcb[MAX_NR_PROC] __attribute__((used));
 static PCB pcb_boot;
 PCB *current;
@@ -20,6 +20,11 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
+//	naive_uload(NULL,"/bin/bmptest");
+//	naive_uload(NULL,"/bin/text");
+	naive_uload(NULL,"/bin/events");
+//	naive_uload(NULL,"/bin/pal");
+//	naive_uload(NULL,"/bin/hello");
 }
 
 _Context* schedule(_Context *prev) {
