@@ -37,10 +37,11 @@ int _write(int fd, void *buf, size_t count){
 	//  _exit(SYS_write);
   return ret;
 }
-intptr_t program_end= *(_end)
+void* program_end= &_end;
 void *_sbrk(intptr_t increment){
-    program_end += increment;
-	return  _syscall(SYS_brk,program_end,0,0);
+   // program_end += increment;
+	program_end=(program_end+increment);
+	return  _syscall(SYS_brk,(intptr_t)program_end,0,0);
 	// return (void *)-1;
 }
 
