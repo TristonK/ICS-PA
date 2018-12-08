@@ -14,43 +14,50 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  * For more details about the register encoding scheme, see i386 manual.
  */
 
-typedef struct {
-  union{
-    union {
-      uint32_t _32;
-      uint16_t _16;
-      uint8_t _8[2];
-     } gpr[8];
-
+typedef union{
+ union {
+    uint32_t _32;
+    uint16_t _16;
+    uint8_t _8[2];
+  } gpr[8];
+  
   /* Do NOT change the order of the GPRs' definitions. */
 
   /* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions
    * in PA2 able to directly access these registers.
    */
-   struct{ 
-      rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-
-      vaddr_t eip;};
+ struct{
+  rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+	vaddr_t eip;
+	
+	union{
+		struct{
+		  uint32_t  CF :1;//CF  0
+		  uint32_t  nouse1 :1;
+		  uint32_t  PF :1;
+		  uint32_t  nouse2 :1;
+		  uint32_t  AF :1;
+		  uint32_t  nouse3 :1;
+		  uint32_t  ZF :1;//ZF 6
+		  uint32_t  SF :1;//SF 7
+		  uint32_t  TF :1;
+		  uint32_t  IF :1;//IF 9
+		  uint32_t  DF :1;
+		  uint32_t  OF :1;//OF 11
+		  uint32_t  nouse4 :20;
+  		}; 
+  		uint32_t eflags;
   };
-  union{
-	 struct{
-		 uint32_t CF:1;
-		 uint32_t :5;
-		 uint32_t ZF:1;
-		 uint32_t SF:1;
-		 uint32_t  :1;
-		 uint32_t IF:1;
-		 uint32_t  :1;
-		 uint32_t OF:1;
-		 uint32_t  :20;
-		 };
-	uint32_t eflags;
-	 };
-  rtlreg_t cs;
-  struct{
-	  uint16_t limit;
-	  uint32_t base;
-  }idtr;
+
+	uint32_t cs,ss,ds,es,fs,gs;
+	struct {
+		uint16_t limit;
+		uint32_t base;
+	}IDTR;
+
+   };
+
+
 } CPU_state;
 
 extern CPU_state cpu;
