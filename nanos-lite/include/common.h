@@ -13,4 +13,8 @@ typedef char bool;
 #define true 1
 #define false 0
 
+//my
+//extern void naive_uload(PCB *pcb, void *entry);
+//
+
 #endif
