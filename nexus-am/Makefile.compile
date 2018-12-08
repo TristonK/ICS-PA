@@ -54,7 +54,7 @@ $(DST_DIR)/%.o: %.cpp
 $(DST_DIR)/%.o: %.c
 	@echo + CC $<
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $< 
 $(DST_DIR)/%.o: %.S
 	@echo + AS $<
 	@mkdir -p $(dir $@)

@@ -12,8 +12,8 @@ void decoding_set_jmp(bool is_jmp);
 bool interpret_relop(uint32_t relop, const rtlreg_t src1, const rtlreg_t src2);
 
 /* RTL basic instructions */
-static inline void interpret_rtl_li(rtlreg_t* dest, uint32_t imm) {
 
+/*static*/ inline void interpret_rtl_li(rtlreg_t* dest, uint32_t imm) {
   *dest = imm;
 }
 
@@ -34,6 +34,7 @@ static inline void interpret_rtl_mv(rtlreg_t* dest, const rtlreg_t *src1) {
 
 make_rtl_arith_logic(add)
 make_rtl_arith_logic(sub)
+
 make_rtl_arith_logic(and)
 make_rtl_arith_logic(or)
 make_rtl_arith_logic(xor)
@@ -150,52 +151,73 @@ static inline void rtl_sr(int r, const rtlreg_t* src1, int width) {
 
 static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
   // dest <- ~src1
-  *dest=~*(src1);
+  //TODO();
+	*dest=~(*src1);
 }
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  int movv=32-8*width;
-  *dest=((int)(*src1<<movv)>>movv);
+ // TODO();
+  // 这里符号扩展是扩展到32位，width给的是src本来的宽度
+  // 已检查多次，应该问题不在这里
+   uint32_t temp1=8*width;
+   if((width<0)||(width>4)){printf("error in rtl_sext\n");assert(0);}
+   uint32_t temp2= ((*src1)>>(temp1-1))&1;
+   *dest=*src1;
+  if(temp2==1){
+      for(int i=temp1;i<32;i++){
+      		*dest=(*dest)|(1<<i);
+      }
+  }
 }
 
 static inline void rtl_push(const rtlreg_t* src1) {
   // esp <- esp - 4
   // M[esp] <- src1
- // rtl_subi(&reg_l(cpu.esp),&reg_l(cpu.esp),4);
-  //rtl_sm(&reg_l(cpu.esp),src1,4);
-  cpu.esp=cpu.esp-4;
-  vaddr_write(cpu.esp,*src1,4);
+  //
+ // TODO();	
+	cpu.esp=cpu.esp-4;
+	vaddr_write(cpu.esp,*src1,4);
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
- // rtl_lm(dest,&reg_l(cpu.esp),4);
-  *dest= vaddr_read(cpu.esp,4);
+ // TODO();
+	*dest=vaddr_read(cpu.esp,4);
 	cpu.esp=cpu.esp+4;
+	
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
     const rtlreg_t *src1, int imm) {
   // dest <- (src1 relop imm ? 1 : 0)
-  rtl_li(&at,imm);
-  *dest=interpret_relop(relop,*src1,at);
+  if(interpret_relop(relop,*src1,imm)){*dest=*src1;}
+  else *dest=imm; 
+ // TODO();
 }
 
 static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
-  *dest=(*src1)>>(width*8-1)&0x1;
+   Assert((width>0)&&(width<=4),"width>4或width<=0");
+   int temp=width*8;
+   temp=(*src1)>>(temp-1); 
+   temp=temp&1;
+	if(temp==1)*dest=1;
+	else *dest=0;
+//  TODO();
 }
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    cpu.f=*src; \
-  } \
+    /*TODO();*/ \
+	if(*src==1)cpu.f=1;\
+	else cpu.f=0;	  \
+  }   \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    *dest=cpu.f; \
+   /* TODO();*/ \
+	*dest=cpu.f;		\
   }
-
 make_rtl_setget_eflags(CF)
 make_rtl_setget_eflags(OF)
 make_rtl_setget_eflags(ZF)
@@ -203,14 +225,24 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  at=((*result<<(32-8*width))==0);
-  rtl_set_ZF(&at);
+	bool t_flag=0;
+	uint32_t temp=*result;
+	switch(width){
+	case 1:if((temp&0xff) ==0)t_flag=1;break;
+	case 2:if((temp&0xffff) ==0)t_flag=1;break;
+	case 4:if((temp&0xffffffff) ==0)t_flag=1;break;
+	default:assert(0);
+	}
+	cpu.ZF=t_flag;	
+      //	TODO();
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  rtl_msb(&at,result,width);
-  rtl_set_SF(&at);
+	//TODO();
+	assert((width>0)&&(width<=4));	
+	if( ( ( (*result)>>(width*8-1) )&1) ==1)cpu.SF=1;
+	else cpu.SF=0;
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
