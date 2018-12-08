@@ -23,11 +23,11 @@ _Context* irq_handle(_Context *tf) {
   printf("irq %d\n",tf->irq);
   printf("eip %d\n",tf->eip);*/
   _Context *next = tf;
-  printf("%d\n",tf->irq);
+//  printf("%d\n",tf->irq);
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
-	  case 0x80: ev.event= _EVENT_SYSCALL;/*printf("0x80\n");*/break;
+	  case 0x5: ev.event= _EVENT_SYSCALL;/*printf("0x80\n");*/break;
 	  case 0x81: ev.event= _EVENT_YIELD;break;
       default: ev.event = _EVENT_ERROR; break;
     }
