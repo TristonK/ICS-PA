@@ -1,24 +1,32 @@
 #include <am.h>
 #include <x86.h>
-//#include<stdio.h>
+//my
+#include <klib.h>
+//my
+
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 void vectrap();
-void vecsys();
-//void irq0();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
+  //printf("go here");
+/*  printf("1   %d\n ",tf->edi);
+  printf("2   %d\n ",tf->esi);
+  printf("3   %d\n ",tf->ebp);
+  printf("4   %d\n ",tf->esp);
+  printf("5   %d\n ",tf->ebx);
+  printf("6   %d\n ",tf->edx);
+  printf("7   %d\n ",tf->ecx);
+  printf("8   %d\n ",tf->eax);
+  printf("err %d \n", tf->err);
+  printf("irq %d\n",tf->irq);
+  printf("eip %d\n",tf->eip);*/
   _Context *next = tf;
-//  printf("eflags:%x,cs:%x,eip:%x\n",tf->eflags,tf->cs,tf->eip);
-//  printf("irq:%d\n",tf->irq);
-//  printf("eax:%x,ecx:%x,edx:%x,ebx:%x,esp:%x,ebp:%x,esi:%x,edi:%x\n",
-//  tf->eax,tf->ecx,tf->edx, tf->ebx, tf->esp, tf->ebp, tf->esi, tf->edi);
- if (user_handler) {
+  if (user_handler) {
     _Event ev;
     switch (tf->irq) {
-	 	case 0x81:		ev.event = _EVENT_YIELD;break;
-		case 0x80:		ev.event = _EVENT_SYSCALL;break;
+	  case 0x81: ev.event= _EVENT_YIELD;break;
       default: ev.event = _EVENT_ERROR; break;
     }
 
@@ -27,7 +35,8 @@ _Context* irq_handle(_Context *tf) {
       next = tf;
     }
   }
-
+ // printf("is go");
+ // printf("%d",tf->eax);
   return next;
 }
 
@@ -41,7 +50,6 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 
   // -------------------- system call --------------------------
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), vectrap, DPL_KERN);
-  idt[0x80] = GATE(STS_TG32, KSEL(SEG_KCODE), vecsys, DPL_KERN);
 
   set_idt(idt, sizeof(idt));
 

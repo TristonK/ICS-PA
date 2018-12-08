@@ -2,7 +2,8 @@
 #define __COMMON_H__
 
 #define DEBUG
-//#define DIFF_TEST
+#define DIFF_TEST
+
 #if _SHARE
 // do not enable these features while building a reference design
 #undef DIFF_TEST
@@ -24,6 +25,7 @@ typedef uint32_t paddr_t;
 typedef uint32_t vaddr_t;
 
 typedef uint16_t ioaddr_t;
+
 
 #define false 0
 #define true 1

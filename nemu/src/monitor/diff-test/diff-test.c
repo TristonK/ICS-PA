@@ -20,7 +20,7 @@ void init_difftest(char *ref_so_file, long img_size) {
   return;
 #endif
 
-//  assert(ref_so_file != NULL);
+  assert(ref_so_file != NULL);
 
   void *handle;
   handle = dlopen(ref_so_file, RTLD_LAZY | RTLD_DEEPBIND);
@@ -71,15 +71,75 @@ void difftest_step(uint32_t eip) {
 
   // TODO: Check the registers state with the reference design.
   // Set `nemu_state` to `NEMU_ABORT` if they are not the same.
-  //TODO();
-	if(ref_r.eax!=cpu.eax){printf("QEMU:eax %x ; NEMU: eax %x\n",ref_r.eax,cpu.eax);nemu_state=NEMU_ABORT;}
-	if(ref_r.ecx!=cpu.ecx){printf("QEMU:ecx %x ; NEMU: ecx %x\n",ref_r.ecx,cpu.ecx);nemu_state=NEMU_ABORT;}	       
-	if(ref_r.edx!=cpu.edx){printf("QEMU:edx %x ; NEMU: edx %x\n",ref_r.edx,cpu.edx);nemu_state=NEMU_ABORT;}
-	if(ref_r.ebx!=cpu.ebx){printf("QEMU:ebx %x ; NEMU: ebx %x\n",ref_r.ebx,cpu.ebx);nemu_state=NEMU_ABORT;}
-	if(ref_r.esp!=cpu.esp){printf("QEMU:esp %x ; NEMU: esp %x\n ",ref_r.esp,cpu.esp);nemu_state=NEMU_ABORT;}
-	if(ref_r.ebp!=cpu.ebp){printf("QEMU:ebp %x ; NEMU: ebp %x\n",ref_r.ebp,cpu.ebp);nemu_state=NEMU_ABORT;}
-	if(ref_r.esi!=cpu.esi){printf("QEMU:esi %x ; NEMU: esi %x\n",ref_r.esi,cpu.esi);nemu_state=NEMU_ABORT;}
-	if(ref_r.edi!=cpu.edi){printf("QEMU:edi %x ; NEMU: edi %x\n",ref_r.edi,cpu.edi);nemu_state=NEMU_ABORT;}
-	if(ref_r.eip!=cpu.eip){printf("QEMU:eip %x ; NEMU: eip %x\n",ref_r.eip,cpu.eip);nemu_state=NEMU_ABORT;}
+ // TODO();
+ // bool diff=false;
+//  Log("zf nemu %d qemu %d",cpu.ZF,ref_r.ZF);
+  // Log("done eax nemu %#x qemu %#x\n",cpu.eax,ref_r.eax); 
+// Log("ebx+0x1002e4 nemu %#x qemu %#x",cpu.ebx,ref_r.ebx);
+ if(cpu.eip==0x1004c0){
+   Log("eax %x \n ecx %x\n edx %x\n ebx %x\n esp %x\n ebp %x\n esi %x\n edi %x \n%x\n",
+		   cpu.eax,cpu.ecx,cpu.edx,cpu.ebx,cpu.esp,cpu.ebp,ref_r.esi,ref_r.edi,cpu.edi);
+ 
+ }
+  if(ref_r.eax != cpu.eax){
+		 Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);	  
+		  nemu_state = NEMU_ABORT;
+}
+    if(ref_r.ecx != cpu.ecx){
+		 Log("ecx nemu  %#x  qemu  %#x\n", cpu.ecx, ref_r.ecx);	  
+		  nemu_state = NEMU_ABORT;
+}
 
+		 // diff = true;
+    if(ref_r.edx != cpu.edx)
+	{
+		 Log("edx nemu  %#x  qemu  %#x\n", cpu.edx, ref_r.edx);	  
+		  nemu_state = NEMU_ABORT;
+}
+	 // diff = true;
+    if(ref_r.ebx != cpu.ebx){
+		 // diff = true;
+		 Log("ebx nemu  %#x  qemu  %#x\n", cpu.ebx, ref_r.ebx);	  
+		  nemu_state = NEMU_ABORT;
+}
+     if(ref_r.esp != cpu.esp){
+		 // diff = true;{
+		 Log("esp nemu  %#x  qemu  %#x\n", cpu.esp, ref_r.esp);	  
+		  nemu_state = NEMU_ABORT;
+}
+
+    if(ref_r.ebp != cpu.ebp){	
+		 // diff = true;{
+		 Log("ebp nemu  %#x  qemu  %#x\n", cpu.ebp, ref_r.ebp);	  
+		  nemu_state = NEMU_ABORT;
+}
+
+    if(ref_r.esi != cpu.esi){
+		 // diff = true;
+		 Log("esi nemu  %#x  qemu  %#x\n", cpu.esi, ref_r.esi);	  
+		  nemu_state = NEMU_ABORT;
+   }
+   if(ref_r.edi != cpu.edi){
+		 // diff = true;
+		 Log("edi nemu  %#x  qemu  %#x\n", cpu.edi, ref_r.edi);	  
+		  nemu_state = NEMU_ABORT;
+   }  
+    if(ref_r.eip != cpu.eip){
+		 Log("eip nemu  %#x  qemu  %#x\n", cpu.eip, ref_r.eip);	  
+		  nemu_state = NEMU_ABORT;
+    }
+	
+		 // diff = true;											  
+   /* if (diff) {
+		Log("eax nemu  %#x  qemu  %#x\n", cpu.eax, ref_r.eax);
+		Log("ecx nemu  %#x  qemu  %#x\n", cpu.ecx, ref_r.ecx);	
+		Log("edx nemu  %#x  qemu  %#x\n", cpu.edx, ref_r.edx);
+		Log("ebx nemu  %#x  qemu  %#x\n", cpu.ebx, ref_r.ebx);
+		Log("esp nemu  %#x  qemu  %#x\n", cpu.esp, ref_r.esp);
+		Log("ebp nemu  %#x  qemu  %#x\n", cpu.ebp, ref_r.ebp);
+		Log("esi nemu  %#x  qemu  %#x\n", cpu.esi, ref_r.esi);
+     	Log("edi nemu  %#x  qemu  %#x\n", cpu.edi, ref_r.edi);
+		Log("eip nemu  %#x  qemu  %#x\n", cpu.eip, ref_r.eip);
+	   nemu_state = NEMU_ABORT;
+	 }*/
 }
