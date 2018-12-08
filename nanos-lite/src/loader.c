@@ -4,9 +4,9 @@
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
- size_t len = get_ramdisk_size();
+/* size_t len = get_ramdisk_size();
  void *buf=(void *)0x4000000;
- ramdisk_read(buf,0,len);
+ ramdisk_read(buf,0,len);*/
    	return DEFAULT_ENTRY;
 }
 
