@@ -74,7 +74,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 	switch (whence){
 	    case SEEK_SET:file_table[fd].open_offset=offset;break;
 	    case SEEK_CUR:file_table[fd].open_offset=file_table[fd].open_offset+offset;break;
-	    case SEEK_END:file_table[fd].open_offset=file_table[fd].size+offset;break;
+	    case SEEK_END:file_table[fd].open_offset=file_table[fd].size/*+offset*/;break;
 		default:
 					  panic("no such op of fs_lseek");
 	}
