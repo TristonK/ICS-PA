@@ -12,6 +12,7 @@ size_t fs_filesz(int fd);
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
 // size_t len = get_ramdisk_size();
+ Log("here");
  int fd=fs_open(filename,0,0);
  size_t filesize=fs_filesz(fd);
  void *buf=(void *)0x4000000;
@@ -22,7 +23,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
-	Log("here");
+//	Log("here");
   uintptr_t entry = loader(pcb, filename);
   ((void(*)())entry) ();
 }
