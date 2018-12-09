@@ -14,12 +14,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 // size_t len = get_ramdisk_size();
 // Log("here");
  int fd=fs_open(filename,0,0);
- Log("%d",fd);
+// Log("%d",fd);
  size_t filesize=fs_filesz(fd);
  void *buf=(void *)0x4000000;
  fs_read(fd,buf,filesize);
  fs_close(fd);
- Log("here");
+// Log("here");
  // ramdisk_read(buf,0,len);
    	return DEFAULT_ENTRY;
 }
