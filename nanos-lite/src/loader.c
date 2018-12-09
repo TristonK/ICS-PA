@@ -12,8 +12,9 @@ size_t fs_filesz(int fd);
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
 // size_t len = get_ramdisk_size();
- Log("here");
+// Log("here");
  int fd=fs_open(filename,0,0);
+ Log("here2");
  size_t filesize=fs_filesz(fd);
  void *buf=(void *)0x4000000;
  fs_read(fd,buf,filesize);
