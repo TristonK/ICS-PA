@@ -1,5 +1,12 @@
 #include "common.h"
-
+/*#include <sys/types.h>
+int fs_open(const char *pathname, int flags ,int mode);
+fs_filesz
+ssize_t fs_read(int fd, void *buf, size_t len);
+ssize_t fs_write(int fd, void *buf, size_t len);
+int fs_close(int fd);
+size_t fs_filesz(int fd);
+*/
 extern uint8_t ramdisk_start;
 extern uint8_t ramdisk_end;
 #define RAMDISK_SIZE ((&ramdisk_end) - (&ramdisk_start))

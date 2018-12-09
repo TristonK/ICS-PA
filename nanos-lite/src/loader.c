@@ -2,11 +2,22 @@
 
 #define DEFAULT_ENTRY 0x4000000
 
+#include <sys/types.h>
+int fs_open(const char *pathname, int flags ,int mode);
+ssize_t fs_read(int fd, void *buf, size_t len);
+ssize_t fs_write(int fd, void *buf, size_t len);
+int fs_close(int fd);
+size_t fs_filesz(int fd);
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
- size_t len = get_ramdisk_size();
+// size_t len = get_ramdisk_size();
+ int fd=fs_open(filename,0,0);
+ size_t filesize=fs_filesz(fd);
  void *buf=(void *)0x4000000;
- ramdisk_read(buf,0,len);
+ fs_read(fd,buf,filesize);
+ fs_close(fd);
+ // ramdisk_read(buf,0,len);
    	return DEFAULT_ENTRY;
 }
 
