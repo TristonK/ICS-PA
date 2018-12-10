@@ -9,6 +9,6 @@ __attribute__((section(".text.unlikely"))) void _start(int argc, char *argv[], c
  // exit(main(argc, argv, envp));
     char *env[]={NULL};
 	environ =env;
-	exit(main(argc,argv,ebv));
+	exit(main(argc,argv,env));
    	assert(0);
 }
