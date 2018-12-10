@@ -39,7 +39,7 @@ _Context* do_syscall(_Context *c) {
 	//c->GPR1=ret;
 	//******************
 	case SYS_close: c->GPR1=fs_close(a[1]);break;
-    case SYS_lseek: c->GPR1=fs_lseek(a[1],a[2],a[3]);
+    case SYS_lseek: c->GPR1=fs_lseek(a[1],a[2],a[3]);break;
 	case SYS_brk:/*Log("%d",a[1]);*/ c->GPR1=0; break;
   	default: panic("Unhandled syscall ID = %d", a[0]);
   }
