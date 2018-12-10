@@ -24,17 +24,17 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //  while(reallen<=len){
 		memset(temp,'\0',sizeof(temp));
 	    int keycode=read_key();
-	//	Log("%s",keycode);
+		Log("keycode is %s",keycode);
 		if(keycode!=_KEY_NONE){
 		   if((keycode&0x8000)==0){
-			 sprintf(buf,"ku %s\n",keyname[keycode]);
+			 sprintf(buf,"ku %s\n\0",keyname[keycode]);
      	}
 		    else{
-			sprintf(buf,"kd %s\n",keyname[keycode&0x7ff]);
+			sprintf(buf,"kd %s\n\0",keyname[keycode&0x7ff]);
 		}}
 	    else{
 			uint32_t time=uptime();
-			sprintf(buf,"t %d\n",time);
+			sprintf(buf,"t %d\n\0",time);
 		    }
 	//	int newlen=strlen(buf);
 	//	Log("strlen is %d and realen is %d",newlen,reallen);
@@ -48,6 +48,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 //			break;
 //		Log("now len is %d",reallen);
 //	}
+    Log("buf is %s",buf);
     reallen=strlen(buf);
 	return reallen;
 }
