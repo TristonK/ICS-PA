@@ -34,7 +34,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		}}
 	    else{
 			uint32_t time=uptime();
-			sprintf(temp,"t %d\n\0",time);
+			sprintf(temp,"t %d\n",time);
 		    }
 		int newlen=strlen(temp);
 //		Log("strlen is %d",newlen);
