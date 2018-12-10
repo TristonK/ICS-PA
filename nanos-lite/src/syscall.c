@@ -20,8 +20,8 @@ _Context* do_syscall(_Context *c) {
 	case SYS_exit: _halt(a[1]);c->GPR1=0;break;
 	case SYS_yield: _yield();c->GPR1=0;break;
     case SYS_open: c->GPR1=fs_open((char *)a[1],0,0);break;
-    case SYS_read: fs_read(a[1],(char*)a[2],a[3]);break;
- 	case SYS_write: fs_write(a[1],(char *)a[2],a[3]);break;
+    case SYS_read: c->GPR1=fs_read(a[1],(char*)a[2],a[3]);break;
+ 	case SYS_write:c->GPR1= fs_write(a[1],(char *)a[2],a[3]);break;
     //*****SYS_write****	
 	//intptr_t ret=0;
 /*	if((int)a[1]==1||(int)a[1]==2){
