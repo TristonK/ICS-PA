@@ -50,7 +50,7 @@ int fs_close(int fd);
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   int fd=fs_open("/dev/fb",0,0);
-  file_table[fd].size=screen_width()*screen_height();
+  file_table[fd].size=screen_width()*screen_height()*4;
   fs_close(fd);
 }
 
@@ -99,7 +99,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 			return len;
 		default:*/
 	if(file_table[fd].write!=NULL)
-		return file_table[fd].write(buf,0,len);
+		return file_table[fd].write(buf,file_table[fd].open_offset,len);
      len=len+file_table[fd].open_offset<=file_table[fd].size?len:file_table[fd].size-file_table[fd].open_offset;
 	 ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	 file_table[fd].open_offset+=len;

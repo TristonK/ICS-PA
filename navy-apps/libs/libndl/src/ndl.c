@@ -137,8 +137,8 @@ static void get_display_info() {
     sscanf(buf, "%s", key);
     sscanf(delim + 1, "%s", value);
    // printf("stupid printf\n");
-    printf("%s\n",buf);
-	printf("%s\n",key);
+  //  printf("%s\n",buf);
+//	printf("%s\n",key);
     if (strcmp(key, "WIDTH") == 0) sscanf(value, "%d", &screen_w);
 	if (strcmp(key, "HEIGHT") == 0) sscanf(value, "%d", &screen_h);
   }
