@@ -37,7 +37,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 			sprintf(temp,"t %d\n",time);
 		    }
 		int newlen=strlen(temp);
-//		Log("strlen is %d",newlen);
+		Log("strlen is %d and realen is %d",newlen,reallen);
 		if(newlen+reallen<len){
 			sprintf(buf+reallen,"%s",temp);
 			reallen+=newlen;
