@@ -58,10 +58,11 @@ int fs_open(const char* pathname, int flags, int mode){
 ssize_t fs_read(int fd,void *buf, size_t len){
 //	int i=fd;
 	len=len+file_table[fd].open_offset<=file_table[fd].size?len:file_table[fd].size-file_table[fd].open_offset;
-    Log("len is %d",len);
-	Log("disk+open is %d",file_table[fd].disk_offset+file_table[fd].open_offset);
+   // Log("len is %d",len);
+//	Log("disk+open is %d",file_table[fd].disk_offset+file_table[fd].open_offset);
 	ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	file_table[fd].open_offset+=len;
+	if(file_table[fd].open_offset>file_table[fd].size) file_table[fd].open_offset=file_table[fd].size;
 	return len;
 }
 
@@ -69,6 +70,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
      len=len+file_table[fd].open_offset<=file_table[fd].size?len:file_table[fd].size-file_table[fd].open_offset;
 	 ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	 file_table[fd].open_offset+=len;
+		if(file_table[fd].open_offset>file_table[fd].size) file_table[fd].open_offset=file_table[fd].size;
 	 return len;
 }
 
@@ -80,6 +82,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 		default:
 					  panic("no such op of fs_lseek");
 	}
+	if(file_table[fd].open_offset>file_table[fd].size) file_table[fd].open_offset=file_table[fd].size;
 	return file_table[fd].open_offset;
 }
 
