@@ -25,6 +25,8 @@ static char dispinfo[128] __attribute__((used));
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
    memcpy(buf,offset+dispinfo,len);
+   printf("%d\n",len);
+   printf("%s\n",(char *)buf);
    Log("%s",buf);
 	return len;
 }
