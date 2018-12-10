@@ -27,27 +27,28 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	//	Log("%s",keycode);
 		if(keycode!=_KEY_NONE){
 		   if((keycode&0x8000)==0){
-			 sprintf(temp,"ku %s\n",keyname[keycode]);
+			 sprintf(buf,"ku %s\n",keyname[keycode]);
      	}
 		    else{
-			sprintf(temp,"kd %s\n",keyname[keycode&0x7ff]);
+			sprintf(buf,"kd %s\n",keyname[keycode&0x7ff]);
 		}}
 	    else{
 			uint32_t time=uptime();
-			sprintf(temp,"t %d\n",time);
+			sprintf(buf,"t %d\n",time);
 		    }
-		int newlen=strlen(temp);
+	//	int newlen=strlen(buf);
 	//	Log("strlen is %d and realen is %d",newlen,reallen);
-	    Log("%s",temp);
-		if(newlen+reallen<len){
+	  //  Log("%s",temp);
+	//	if(newlen+reallen<len){
 		//	sprintf(buf,"%s",temp);
-		    memcpy(buf,temp,newlen);
-			reallen+=newlen;
-		}
+		   // memcpy(buf,temp,newlen);
+		//	reallen+=newlen;
+	//	}
 //		else
 //			break;
 //		Log("now len is %d",reallen);
 //	}
+    reallen=strlen(buf);
 	return reallen;
 }
 
