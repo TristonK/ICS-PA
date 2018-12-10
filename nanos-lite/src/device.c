@@ -43,7 +43,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		}
 		else
 			break;
-//		Log("now len is %d",reallen);
+		Log("now len is %d",reallen);
 	}
 	return reallen;
 }
