@@ -20,7 +20,7 @@ static const char *keyname[256] __attribute__((used)) = {
 size_t events_read(void *buf, size_t offset, size_t len) {
     int reallen=0;
 	char temp[2001];
-//	Log("in read and len is %d",len);
+	Log("in read and len is %d",len);
   //  while(reallen<=len){
 		memset(temp,'\0',sizeof(temp));
 	    int keycode=read_key();
