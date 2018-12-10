@@ -131,7 +131,7 @@ static void get_display_info() {
   screen_w = screen_h = 0;
   char buf[128], key[128], value[128], *delim;
   printf("stupid!!\n");
-  char test[100]="is a text\0";
+  char test[100]="is a text";
   printf("%s\n",test);
   printf("stupid is %s",dispinfo);
   while (fgets(buf, 128 , dispinfo)) {
