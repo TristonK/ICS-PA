@@ -18,7 +18,28 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+    int reallen=0;
+	char temp[200];
+    while(reallen<=len){
+		memset(temp,'\0',sizeof(temp));
+	    int keycode=read_key();
+		if(keycode==_KEY_NONE){
+			uint32_t time=uptime();
+			sprintf(temp,"t %d\n",time);
+		}
+		else if((keycode&0x8000)==0){
+			sprintf(temp,"ku %s\n",keyname[keycode]);
+		}
+		else{
+			sprintf(temp,"kd %s\n",keyname[keycode&0x7ff]);
+		}
+		int newlen=strlen(temp);
+		if(newlen+reallen<len){
+			sprintf(buf+reallen,"%s",temp);
+			reallen+=newlen;
+		}
+	}
+	return reallen;
 }
 
 static char dispinfo[128] __attribute__((used));
