@@ -21,7 +21,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     int reallen=0;
 	char temp[20001];
 	Log("in read and len is %d",len);
-    while(reallen<=len){
+  //  while(reallen<=len){
 		memset(temp,'\0',sizeof(temp));
 	    int keycode=read_key();
 	//	Log("%s",keycode);
@@ -41,10 +41,10 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 			sprintf(buf+reallen,"%s",temp);
 			reallen+=newlen;
 		}
-		else
-			break;
-		Log("now len is %d",reallen);
-	}
+//		else
+//			break;
+//		Log("now len is %d",reallen);
+//	}
 	return reallen;
 }
 
