@@ -34,12 +34,12 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		}}
 	    else{
 			uint32_t time=uptime();
-			sprintf(temp,"t %d\n",time);
+			sprintf(temp,"t %d\n\0",time);
 		    }
 		int newlen=strlen(temp);
 //		Log("strlen is %d",newlen);
 		if(newlen+reallen<len){
-			sprintf(buf+reallen,"%s\n\0",temp);
+			sprintf(buf+reallen,"%s",temp);
 			reallen+=newlen;
 		}
 //		else
