@@ -21,17 +21,21 @@ _Context* do_syscall(_Context *c) {
 	case SYS_yield: _yield();c->GPR1=0;break;
     case SYS_open: c->GPR1=fs_open((char *)a[1],0,0);break;
     case SYS_read: c->GPR1=fs_read(a[1],(char*)a[2],a[3]);break;
- 	case SYS_write:c->GPR1= fs_write(a[1],(char *)a[2],a[3]);break;
+ 	case SYS_write://c->GPR1= fs_write(a[1],(char *)a[2],a[3]);break;
     //*****SYS_write****	
 	//intptr_t ret=0;
-/*	if((int)a[1]==1||(int)a[1]==2){
-	   c->GPR1=a[1]==1?a[3]:-1;
+	if((int)a[1]==1||(int)a[1]==2){
+	  // c->GPR1=a[1]==1?a[3]:-1;
 	   void *buf=(void *)a[2];
 	   for(int i=0;i<a[3];i++){
 	      _putc((char)*((char*)(buf+i)));
 	   }
 	}
-	Log();*/
+//	Log();
+    else{
+	   c->GPR1= fs_write(a[1],(char *)a[2],a[3]);
+	}
+	break;
 	//c->GPR1=ret;
 	//******************
 	case SYS_close: c->GPR1=fs_close(a[1]);break;
