@@ -39,6 +39,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 			sprintf(buf+reallen,"%s",temp);
 			reallen+=newlen;
 		}
+		else
+			break;
 	}
 	return reallen;
 }
