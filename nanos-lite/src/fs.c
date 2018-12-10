@@ -8,6 +8,8 @@ size_t ramdisk_read(const void *buf,size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 size_t serial_write(const void *buf,size_t offset,size_t len);
+size_t fb_write(const void *buf, size_t offset, size_t len);
+size_t dispinfo_read(void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -36,13 +38,21 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdout", 0, 0,0, invalid_read, serial_write},
   {"stderr", 0, 0,0, invalid_read, serial_write},
 #include "files.h"
+  {"/dev/fb",0,0,0,invalid_read,fb_write},
+  {"/proc/dispinfo",0,0,0,dispinfo_read,invalid_write},
 };
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
+int fs_open(const char* pathname, int flags, int mode);
+int fs_close(int fd);
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  int fd=fs_open("/dev/fb",0,0);
+  file_table[fd].size=screen_width()*screen_height();
+  fs_close(fd);
 }
+
 //my func begin
 int fs_open(const char* pathname, int flags, int mode){
 	int ret=-1;
