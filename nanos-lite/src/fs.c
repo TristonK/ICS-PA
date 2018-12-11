@@ -1,10 +1,10 @@
 #include "fs.h"
 #include <sys/types.h>
-
+#include "proc.h"
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
-size_t ramdisk_read(const void *buf,size_t offset, size_t len);
+//size_t ramdisk_read(const void *buf,size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 size_t serial_write(const void *buf,size_t offset,size_t len);
@@ -12,6 +12,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
 
+//extern PCB *current;
+void naive_uload(PCB *pcb, void *entry);
 
 typedef struct {
   char *name;
@@ -43,6 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
   {"/dev/fb",0,0,0,invalid_read,fb_write},
   {"/proc/dispinfo",128,0,0,dispinfo_read,invalid_write},
   {"/dev/events",200000,0,0,events_read,invalid_write},
+  {"/dev/tty",0,0,0,invalid_read,serial_write},
 };
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
@@ -140,4 +143,14 @@ int fs_close(int fd){
 size_t fs_filesz(int fd){
  return file_table[fd].size;
 }
+
+int fs_execve(const char *filename,char *const argv[],char *const envp[]){
+     naive_uload(NULL,(void *)filename);
+     return 0;
+}
+
+
+
+
+
 //my func end
