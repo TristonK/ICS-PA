@@ -150,7 +150,11 @@ int fs_execve(const char *filename,char *const argv[],char *const envp[]){
 }
 
 
-
+/*void fs_exit(){
+	char* a0[16];
+	memcpy(a0,"bin/init");
+    fs_execve()	
+}*/
 
 
 //my func end

@@ -8,6 +8,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len);
 off_t fs_lseek(int fd, off_t offset,int whence);
 int fs_close(int fd);
 int fs_execve(const char*filename,char*const argv[],char*const envp[]);
+void fs_exit();
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -19,10 +20,11 @@ _Context* do_syscall(_Context *c) {
   switch (a[0]) {
 	case SYS_exit:/* _halt(a[1]);c->GPR1=0;*/
 	//	_Context temp;
-		c->GPR1=SYS_execve;
+	/*	c->GPR1=SYS_execve;
 		c->GPR2=(intptr_t)"bin/init";
 		c->GPR3=c->GPR4=0;
-		do_syscall(c);break;
+		do_syscall(c);*/
+		fs_execve((char*)"/bin/init",0,0);break;
 	case SYS_yield: _yield();c->GPR1=0;break;
     case SYS_open: c->GPR1=fs_open((char *)a[1],0,0);break;
     case SYS_read: c->GPR1=fs_read(a[1],(char*)a[2],a[3]);break;
@@ -49,6 +51,5 @@ _Context* do_syscall(_Context *c) {
     case SYS_execve: fs_execve((char*)a[1],0,0);break;
 	default: panic("Unhandled syscall ID = %d", a[0]);
   }
-
   return NULL;
 }
