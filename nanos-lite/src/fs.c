@@ -72,7 +72,7 @@ int fs_open(const char* pathname, int flags, int mode){
 
 ssize_t fs_read(int fd,void *buf, size_t len){
 //	int i=fd; 
-    switch(fd){
+    switch(fd) {
         case FD_STDIN:
 		case FD_STDOUT:
 		case FD_STDERR:
@@ -84,6 +84,8 @@ ssize_t fs_read(int fd,void *buf, size_t len){
 	if(file_table[fd].read==NULL)
 	ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	else file_table[fd].read(buf,file_table[fd].open_offset,len);
+	
+	if(strcmp(file_table[fd].name,"/dev/events"))
 	file_table[fd].open_offset+=len;
 	if(file_table[fd].open_offset>file_table[fd].size) file_table[fd].open_offset=file_table[fd].size;
 	return len;}
