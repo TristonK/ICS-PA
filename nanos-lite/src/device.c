@@ -20,11 +20,11 @@ static const char *keyname[256] __attribute__((used)) = {
 size_t events_read(void *buf, size_t offset, size_t len) {
     int reallen=0;
 	char temp[2001];
-	Log("in read and len is %d",len);
+//	Log("in read and len is %d",len);
   //  while(reallen<=len){
 		memset(temp,'\0',sizeof(temp));
 	    int keycode=read_key();
-		Log("keycode is %d",keycode);
+	//	Log("keycode is %d",keycode);
 		if(keycode!=_KEY_NONE){
 		   if((keycode&0x8000)==0){
 			 sprintf(buf,"ku %s\n\0",keyname[keycode]);
@@ -48,7 +48,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 //			break;
 //		Log("now len is %d",reallen);
 //	}
-    Log("buf is %s",buf);
+  //  Log("buf is %s",buf);
     reallen=strlen(buf);
 	return reallen;
 }
