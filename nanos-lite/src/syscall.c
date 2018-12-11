@@ -17,12 +17,12 @@ _Context* do_syscall(_Context *c) {
   a[3] = c->GPR4;
 //  Log("%d  %d  %d  %d\n",a[0],a[1],a[2],a[3]);
   switch (a[0]) {
-	case SYS_exit: _halt(a[1]);c->GPR1=0;
+	case SYS_exit:/* _halt(a[1]);c->GPR1=0;*/
 	//	_Context temp;
-/*		c->GPR1=SYS_execve;
+		c->GPR1=SYS_execve;
 		c->GPR2=(intptr_t)"bin/init";
 		c->GPR3=c->GPR4=0;
-		do_syscall(c);*/break;
+		do_syscall(c);break;
 	case SYS_yield: _yield();c->GPR1=0;break;
     case SYS_open: c->GPR1=fs_open((char *)a[1],0,0);break;
     case SYS_read: c->GPR1=fs_read(a[1],(char*)a[2],a[3]);break;
