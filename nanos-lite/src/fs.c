@@ -81,19 +81,20 @@ ssize_t fs_read(int fd,void *buf, size_t len){
 	len=(len+file_table[fd].open_offset)<=file_table[fd].size?len:file_table[fd].size-file_table[fd].open_offset;
    // Log("len is %d",len);
 //	Log("disk+open is %d",file_table[fd].disk_offset+file_table[fd].open_offset);
+	int ret=0;
 	if(file_table[fd].read==NULL)
-	    ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	    ret=ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	else 
-		file_table[fd].read(buf,file_table[fd].open_offset,len);
+	    ret=file_table[fd].read(buf,file_table[fd].open_offset,len);
 	
 	if(strcmp(file_table[fd].name,"/dev/events")){
 	    file_table[fd].open_offset+=len;
 	    if(file_table[fd].open_offset>file_table[fd].size) 
 			file_table[fd].open_offset=file_table[fd].size;
 	}
-	else
-		Log("is events");
-	return len;
+//	else
+//		Log("is events");
+	return ret;
 }
 
 ssize_t fs_write(int fd, const void *buf, size_t len){
