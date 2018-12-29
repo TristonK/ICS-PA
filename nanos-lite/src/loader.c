@@ -1,6 +1,6 @@
 #include "proc.h"
 
-#define DEFAULT_ENTRY 0x4000000
+#define DEFAULT_ENTRY 0x8048000
 
 #include <sys/types.h>
 int fs_open(const char *pathname, int flags ,int mode);
@@ -8,7 +8,7 @@ ssize_t fs_read(int fd, void *buf, size_t len);
 ssize_t fs_write(int fd, void *buf, size_t len);
 int fs_close(int fd);
 size_t fs_filesz(int fd);
-
+int _protect(_Protect *p);
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
 // size_t len = get_ramdisk_size();
@@ -27,7 +27,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 void naive_uload(PCB *pcb, const char *filename) {
 //	Log("here");
-  uintptr_t entry = loader(pcb, filename);
+//  _protect(pcb);
+	uintptr_t entry = loader(pcb, filename);
   ((void(*)())entry) ();
 }
 
