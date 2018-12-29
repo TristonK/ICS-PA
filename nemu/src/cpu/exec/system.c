@@ -19,7 +19,8 @@ else if(id_dest->width==4)
 
 make_EHelper(mov_r2cr) {
 //  TODO();
-  if(id_dest->reg==0)
+ Log("r2cr %d",id_dest->reg);
+   	if(id_dest->reg==0)
 	  cpu.cr0.val=id_src->val;
   else if(id_dest->reg==3)
 	  cpu.cr3.val=id_src->val;
@@ -30,6 +31,7 @@ make_EHelper(mov_r2cr) {
 
 make_EHelper(mov_cr2r) {
   //TODO();
+  Log("cr2r %d",id_src->reg);
   if(id_src->reg==0){
 	  t1=cpu.cr0.val;
   }
