@@ -52,8 +52,8 @@ paddr_t page_translate(vaddr_t addr){
 }
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-    if(cpu.cr0.paging)
-		assert(0);
+   /* if(cpu.cr0.paging)
+		assert(0);*/
 	if((addr>>12)!=((addr+len-1)>>12)){
 		int l1=4096-(addr&0xfff);
 		int l2=len=l1;
