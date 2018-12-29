@@ -38,8 +38,11 @@ paddr_t page_translate(vaddr_t addr){
     PDE *pdir,pde;PTE *ptab,pte;
 	pdir=(PDE*)(intptr_t)paddr_read(cr3off,4);
 	pde.val=paddr_read((intptr_t)&pdir[dir],4);
+    assert(pde.present);
+	pde.accessed=1;
 	ptab=(PTE *)(intptr_t)paddr_read(pde.page_frame<<12,4);
 	pte.val=paddr_read((intptr_t)&ptab[tab],4);
+	assert(pte.present);
 	return (pte.page_frame<<12)|offset;
 }
 
