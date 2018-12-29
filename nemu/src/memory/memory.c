@@ -35,7 +35,10 @@ paddr_t page_translate(vaddr_t addr){
 	uint32_t tab=((addr)>>12)&0x3ff;
 	uint32_t offset=addr&0xfff;
 	uint32_t cr3off=cpu.cr3.page_directory_base<<12;
-    PDE pde,*pdir;PTE pte,*ptab;
+    uint32_t temp1=paddr_read(cr3off+(dir<<2),4);
+	uint32_t temp2=paddr_read((temp1<<12)+(tab<<2),4);
+	return (temp2<<12)|offset;
+	/* PDE pde,*pdir;PTE pte,*ptab;
 	pdir=(PDE*)(intptr_t)paddr_read(cr3off,4);
 	pde.val=paddr_read((intptr_t)&pdir[dir],4);
     assert(pde.present);
@@ -43,7 +46,7 @@ paddr_t page_translate(vaddr_t addr){
 	ptab=(PTE *)(intptr_t)paddr_read(pde.page_frame<<12,4);
 	pte.val=paddr_read((intptr_t)&ptab[tab],4);
 	assert(pte.present);
-	return (pte.page_frame<<12)|offset;
+	return (pte.page_frame<<12)|offset;*/
 }
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
