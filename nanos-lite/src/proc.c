@@ -6,6 +6,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used));
 static PCB pcb_boot;
 PCB *current;
 void naive_uload(PCB *pcb, void *entry);
+void context_kload(PCB *pcb, void *entry);
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -23,7 +24,7 @@ void hello_fun(void *arg) {
 void init_proc() {
 //	naive_uload(NULL,"/bin/init");
    context_kload(&pcb[0],(void *)hello_fun);
-   swicth_boot_pcb();
+   switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {

@@ -1,6 +1,6 @@
 #include "common.h"
 extern _Context* do_syscall(_Context *c);
-
+extern _Context* schedule(_Context *prev);
 static _Context* do_event(_Event e, _Context* c) {
   switch (e.event) {
 	case _EVENT_YIELD: return schedule(c);/*printf("event yield\n");*/break;
