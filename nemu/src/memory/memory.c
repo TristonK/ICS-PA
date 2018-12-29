@@ -36,8 +36,8 @@ paddr_t page_translate(vaddr_t addr){
 	uint32_t offset=addr&0xfff;
 	uint32_t cr3off=cpu.cr3.page_directory_base<<12;
     uint32_t temp1=paddr_read(cr3off+(dir<<2),4);
-	uint32_t temp2=paddr_read((temp1<<12)+(tab<<2),4);
-	return (temp2<<12)|offset;
+	uint32_t temp2=paddr_read((temp1&0xfffff000)+(tab<<2),4);
+	return (temp2&0xfffff000)|offset;
 	/* PDE pde,*pdir;PTE pte,*ptab;
 	pdir=(PDE*)(intptr_t)paddr_read(cr3off,4);
 	pde.val=paddr_read((intptr_t)&pdir[dir],4);
