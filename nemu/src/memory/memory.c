@@ -56,7 +56,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 		assert(0);*/
 	if((addr>>12)!=((addr+len-1)>>12)){
 		int l1=4096-(addr&0xfff);
-		int l2=len=l1;
+		int l2=len-l1;
 		paddr_t addr1=page_translate(addr);
 		paddr_t addr2=page_translate(addr+l1);
 		uint32_t ret1=paddr_read(addr1,l1);
@@ -71,7 +71,12 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 
 void vaddr_write(vaddr_t addr, uint32_t data, int len) {
 	if((addr>>12)!=((addr+len-1)>>12)){
-		assert(0);
+		int l1=4096-(addr&0xfff);
+		int l2=len-l1;
+		paddr_t addr1=page_translate(addr);
+		paddr_t addr2=page_translate(addr+l1);
+		paddr_write(addr1,data<<(1<<(l1*8-1)),l1);
+		paddr_write(addr2,data>>(l1<<3),l2);
 	}
 	else{	
 		paddr_t paddr=page_translate(addr);
