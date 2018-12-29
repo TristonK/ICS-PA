@@ -1,6 +1,6 @@
 #include "proc.h"
 
-#define DEFAULT_ENTRY 0x8048000
+#define DEFAULT_ENTRY 0x4000000
 
 #include <sys/types.h>
 int fs_open(const char *pathname, int flags ,int mode);
