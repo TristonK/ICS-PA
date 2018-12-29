@@ -64,7 +64,25 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  return NULL;
+    uintptr_t ret=(uintptr_t)stack.end;
+	//uintptr pro_size = sizeof(_Protect);
+	//ret-=pro_size;memset((uintprt *)ret,0,pro_size);
+	uintptr_t cont_size=sizeof(_Context);
+	ret -= cont_size;
+    _Context nc;//new context
+    //nc.prot = 0;
+   	nc.edi = 0;
+	nc.esi = 0;
+	nc.ebp = (uintptr_t)stack.end;
+	nc.esp = nc.ebx = nc.edx = nc.ecx = nc.eax = 0;
+	nc.irq = 0;
+	nc.err=0;
+	nc.eip=(uintptr_t)entry;
+	nc.cs=0x8;
+	nc.eflags=0x2;
+	*(_Context *)ret=nc;
+	return (_Context*)ret;
+  	//return NULL;
 }
 
 void _yield() {
