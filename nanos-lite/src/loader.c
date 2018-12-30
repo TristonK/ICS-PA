@@ -18,7 +18,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 int fd=fs_open(filename,0,0);
  size_t filesize=fs_filesz(fd);
  uintptr_t va=0x8048000;
- uintptr_t end=DEFAULT_ENTRY+filesize;
+ uintptr_t end=DEFAULT_ENTRY+PGROUNDUP(filesize);
  for(;va<end;va+=PGSIZE){
 	void *pa=new_page(1);
 	_map(&pcb->as,(void*)va,pa,1);
