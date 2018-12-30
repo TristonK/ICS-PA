@@ -1,6 +1,6 @@
 #include "proc.h"
 
-#define DEFAULT_ENTRY 0x4000000
+#define DEFAULT_ENTRY 0x8048000
 
 #include <sys/types.h>
 int fs_open(const char *pathname, int flags ,int mode);
@@ -9,19 +9,27 @@ ssize_t fs_write(int fd, void *buf, size_t len);
 int fs_close(int fd);
 size_t fs_filesz(int fd);
 int _protect(_Protect *p);
+void* new_page(size_t nr_page);
+
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
 // size_t len = get_ramdisk_size();
-// Log("here");
- int fd=fs_open(filename,0,0);
-// Log("fd is %d",fd);
+int fd=fs_open(filename,0,0);
  size_t filesize=fs_filesz(fd);
- void *buf=(void *)0x4000000;
-// Log("filezie is %d",filesize);
- fs_read(fd,buf,filesize);
+ uintptr_t va=0x8048000;
+ uintptr_t end=DEFAULT_ENTRY+filesize;
+ for(;va<end;va+=PGSIZE){
+	void *pa=new_page(1);
+	_map(&pcb->as,(void*)va,pa,1);
+    uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
+	fs_read(fd,pa,readsize);
+ }
+// fs_read(fd,buf,filesize);
  fs_close(fd);
 // Log("here");
  // ramdisk_read(buf,0,len);
+   
    	return DEFAULT_ENTRY;
 }
 
@@ -41,7 +49,8 @@ void context_kload(PCB *pcb, void *entry) {
 }
 
 void context_uload(PCB *pcb, const char *filename) {
-  uintptr_t entry = loader(pcb, filename);
+  _protect(&pcb->as);
+	uintptr_t entry = loader(pcb, filename);
 
   _Area stack;
   stack.start = pcb->stack;

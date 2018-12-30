@@ -74,13 +74,25 @@ void _switch(_Context *c) {
   set_cr3(c->prot->ptr);
   cur_as = c->prot;
 }
+#define PDE_P 0x1
 
 int _map(_Protect *p, void *va, void *pa, int mode) {
-  return 0;
+    PDE* pde_base=p->ptr;PTE* pte_base;
+	PDE *pde; pde=&pde_base[PDX(va)];
+	if(!(*pde&PDE_P)){
+		pte_base=(PTE*)(pgalloc_usr(1));
+		*pde=(uint32_t)pde|PDE_P;
+	}
+	else{
+	     pte_base=(PTE*)(PTE_ADDR(pde_base));
+	}
+	PTE *pte=&pte_base[PTX(va)];
+	*pte=(uint32_t)pa|PTE_P;
+	return 0;
 }
 
 _Context *_ucontext(_Protect *p, _Area ustack, _Area kstack, void *entry, void *args) {
-    uintptr_t ret=(uintptr_t)(ustack.end-1*sizeof(uintptr_t));
+	uintptr_t ret=(uintptr_t)(ustack.end-1*sizeof(uintptr_t));
     *(uintptr_t *)ret=0;
 	uintptr_t contsize=sizeof(_Context);
 	ret-=contsize;
@@ -90,6 +102,7 @@ _Context *_ucontext(_Protect *p, _Area ustack, _Area kstack, void *entry, void *
 	nc.eip=(uintptr_t)entry;
 	nc.cs=0x8;
 	nc.eflags=0x2;
+	nc.prot=p;
 	*(_Context * )ret =nc;
 	return (_Context *)ret;
    /* _Context *nc=(_Context *)((uintptr_t*)ustack.end-1)-1;

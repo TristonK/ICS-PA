@@ -9,6 +9,8 @@ static _Context* (*user_handler)(_Event, _Context*) = NULL;
 void vectrap();
 void vecnull();
 void vecsys();
+void get_cur_as(_Context *c);
+void _switch(_Context *c);
 
 _Context* irq_handle(_Context *tf) {
 //  printf("go here");
@@ -23,6 +25,7 @@ _Context* irq_handle(_Context *tf) {
   printf("err %d \n", tf->err);
   printf("irq %d\n",tf->irq);
   printf("eip %d\n",tf->eip);*/
+	get_cur_as(tf);
   _Context *next = tf;
 ///  printf("%d\n",tf->irq);
   if (user_handler) {
@@ -40,6 +43,7 @@ _Context* irq_handle(_Context *tf) {
   }
  // printf("is go");
  // printf("%d",tf->eax);
+  _switch(next);
   return next;
 }
 
