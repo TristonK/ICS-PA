@@ -18,7 +18,7 @@ _Context* do_syscall(_Context *c) {
   a[3] = c->GPR4;
 //  Log("%d  %d  %d  %d\n",a[0],a[1],a[2],a[3]);
   switch (a[0]) {
-	case SYS_exit: _halt(a[1]);c->GPR1=0;break;
+	case SYS_exit:Log("you exit"); _halt(a[1]);c->GPR1=0;break;
 	//	_Context temp;
 	/*	c->GPR1=SYS_execve;
 		c->GPR2=(intptr_t)"bin/init";
