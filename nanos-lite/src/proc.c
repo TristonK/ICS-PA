@@ -24,7 +24,7 @@ void hello_fun(void *arg) {
 void init_proc() {
    context_uload(&pcb[0],"/bin/dummy");
   // context_kload(&pcb[0],(void *)hello_fun);
-  // switch_boot_pcb();
+   switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {
