@@ -84,7 +84,7 @@ int _map(_Protect *p, void *va, void *pa, int mode) {
 		*pde=(uint32_t)pde|PDE_P;
 	}
 	else{
-	     pte_base=(PTE*)(PTE_ADDR(pde_base));
+	     pte_base=(PTE*)(PTE_ADDR(pde));
 	}
 	PTE *pte=&pte_base[PTX(va)];
 	*pte=(uint32_t)pa|PTE_P;
