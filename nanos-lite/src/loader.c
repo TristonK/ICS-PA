@@ -25,11 +25,9 @@ int fd=fs_open(filename,0,0);
     uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
 	fs_read(fd,pa,readsize);
  }
+ current->cur_brk = va;
 // fs_read(fd,buf,filesize);
  fs_close(fd);
-// Log("here");
- // ramdisk_read(buf,0,len);
-   
    	return DEFAULT_ENTRY;
 }
 
