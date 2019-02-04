@@ -77,17 +77,17 @@ void _switch(_Context *c) {
 #define PDE_P 0x1
 
 int _map(_Protect *p, void *va, void *pa, int mode) {
-    PDE* pde_base=p->ptr;PTE* pte_base;
+    PDE* pde_base=(PDE *)p->ptr;PTE* pte_base;
 	PDE *pde; pde=&pde_base[PDX(va)];
 	if(!(*pde&PDE_P)){
 		pte_base=(PTE*)(pgalloc_usr(1));
-		*pde=(uint32_t)pde|PDE_P;
+		*pde=PTE_ADDR(pte_base)|PTE_P;//(uint32_t)pde|PDE_P;
 	}
 	else{
 	     pte_base=(PTE*)((*pde)&0xfffff000);
 	}
 	PTE *pte=&pte_base[PTX(va)];
-	*pte=(uint32_t)(pa)|PTE_P;
+	*pte=PTE_ADDR(pa)|PTE_P;//(uint32_t)(pa)|PTE_P;
 	return 0;
 }
 
