@@ -10,7 +10,7 @@ int fs_close(int fd);
 size_t fs_filesz(int fd);
 int _protect(_Protect *p);
 void* new_page(size_t nr_page);
-uintptr_t heapstart;
+//uintptr_t heapstart;
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
@@ -25,8 +25,8 @@ int fd=fs_open(filename,0,0);
     uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
 	fs_read(fd,pa,readsize);
  }
-// current->cur_brk = va;
- heapstart=va;
+ current->cur_brk = va;
+// heapstart=va;
 // fs_read(fd,buf,filesize);
  fs_close(fd);
    	return DEFAULT_ENTRY;
