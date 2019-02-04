@@ -8,6 +8,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len);
 off_t fs_lseek(int fd, off_t offset,int whence);
 int fs_close(int fd);
 int fs_execve(const char*filename,char*const argv[],char*const envp[]);
+int mm_brk(uintptr_t new_brk);
 void fs_exit();
 
 _Context* do_syscall(_Context *c) {
@@ -47,7 +48,7 @@ _Context* do_syscall(_Context *c) {
 	//******************
 	case SYS_close: c->GPR1=fs_close(a[1]);break;
     case SYS_lseek: c->GPR1=fs_lseek(a[1],a[2],a[3]);break;
-	case SYS_brk:/*Log("%d",a[1]);*/ c->GPR1=0; break;
+	case SYS_brk:/*Log("%d",a[1]);*/ c->GPR1=mm_brk(a[1]); break;
     case SYS_execve: fs_execve((char*)a[1],0,0);break;
 	default: panic("Unhandled syscall ID = %d", a[0]);
   }
