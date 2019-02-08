@@ -15,9 +15,9 @@ void free_page(void *p) {
 //extern uintptr_t heapstart;
 /* The brk() system call handler. */
 int mm_brk(uintptr_t new_brk) {
-	if(current->cur_brk == 0){
+/*	if(current->cur_brk == 0){
 		current->cur_brk = current->max_brk = new_brk;
-	}
+	}*/
 //	else{
 		if(new_brk > current->max_brk){
 			uintptr_t va_begin = current->max_brk;//*PGROUNDUP(current->max_brk);*/(current->max_brk+0xfff)&(~0xfff);
