@@ -16,7 +16,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //  TODO();
 // size_t len = get_ramdisk_size();
 int fd=fs_open(filename,0,0);
- size_t filesize=fs_filesz(fd);
+Log("loader fd is %d",fd); 
+size_t filesize=fs_filesz(fd);
  uintptr_t va=DEFAULT_ENTRY;
  uintptr_t end=DEFAULT_ENTRY+filesize;
  for(;va<end;va+=PGSIZE){
