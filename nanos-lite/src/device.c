@@ -18,7 +18,7 @@ static const char *keyname[256] __attribute__((used)) = {
   _KEYS(NAME)
 };
 size_t events_read(void *buf, size_t offset, size_t len) {
-    _yield();
+//    _yield();
 	int reallen=0;
 //	char temp[2001];
 //	Log("in read and len is %d",len);
