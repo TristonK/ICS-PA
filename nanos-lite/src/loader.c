@@ -25,7 +25,7 @@ int fd=fs_open(filename,0,0);
     uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
 	fs_read(fd,pa,readsize);
  }
- current->cur_brk = va;
+ current->cur_brk = current->max_brk= va;
 // heapstart=va;
 // fs_read(fd,buf,filesize);
  fs_close(fd);
