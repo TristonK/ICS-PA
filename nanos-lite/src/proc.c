@@ -23,13 +23,14 @@ void hello_fun(void *arg) {
 
 void init_proc() {
    context_uload(&pcb[0],"/bin/pal");
-  // context_kload(&pcb[0],(void *)hello_fun);
+   context_uload(&pcb[1],"/bin/hello");
+   // context_kload(&pcb[0],(void *)hello_fun);
    switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  current=(current==&pcb[0]?&pcb[0]:&pcb[0]);
+  current=(current==&pcb[0]?&pcb[1]:&pcb[0]);
   return current->cp;
 //	return NULL;
 }
