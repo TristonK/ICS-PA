@@ -21,9 +21,10 @@ int fd=fs_open(filename,0,0);
  uintptr_t end=DEFAULT_ENTRY+PGROUNDUP(filesize);
  for(;va<end;va+=PGSIZE){
 	void *pa=new_page(1);
-	_map(&pcb->as,(void*)va,pa,1);
+//	_map(&pcb->as,(void*)va,pa,1);
     uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
 	fs_read(fd,pa,readsize);
+	_map(&(pcb->as),(void *)va,pa,1);  
  }
  current->cur_brk = current->max_brk= va;
 // heapstart=va;
