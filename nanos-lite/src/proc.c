@@ -31,11 +31,18 @@ void init_proc() {
    // context_kload(&pcb[0],(void *)hello_fun);
    switch_boot_pcb();
 }
+int time_cnt=0;
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-//  current=&pcb[0]; 
+//  current=&pcb[0];  
+  if(time_cnt==1000){
+	time_cnt=0;
+	current=&pcb[0];
+  }
+  else{
   Log("pg_pcb is %d",fg_pcb);
-  current=(current==&pcb[0]?&pcb[fg_pcb]:&pcb[0]);
+  current=&pcb[fg_pcb];}
+ // current=(current==&pcb[0]?&pcb[fg_pcb]:&pcb[0]);
   return current->cp;
 //	return NULL;
 }
