@@ -1,6 +1,6 @@
 #include "common.h"
 #include <amdev.h>
-
+int pcb_code=1;
 size_t serial_write(const void *buf, size_t offset, size_t len) {
    _yield();
    	for(int i=0;i<len;i++){
@@ -17,7 +17,6 @@ static const char *keyname[256] __attribute__((used)) = {
   [_KEY_NONE] = "NONE",
   _KEYS(NAME)
 };
-
 size_t events_read(void *buf, size_t offset, size_t len) {
     _yield();
 	int reallen=0;
@@ -27,6 +26,12 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 //		memset(temp,'\0',sizeof(temp));
 	    int keycode=read_key();
 //	    Log("keycode is %d",keycode);
+		if(keycode==_KEY_F1)
+			pcb_code=1;
+		if(keycode==_KEY_F2)
+			pcb_code=2;
+		if(keycode==_KEY_F3)
+			pcb_code=3;
 		if(keycode!=_KEY_NONE){
 		   if((keycode&0x8000)==0){
 			 sprintf(buf,"ku %s\n",keyname[keycode]);
