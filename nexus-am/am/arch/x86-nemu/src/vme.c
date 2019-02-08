@@ -101,7 +101,7 @@ _Context *_ucontext(_Protect *p, _Area ustack, _Area kstack, void *entry, void *
 	nc.ebp=(uintptr_t)(ustack.end-1*sizeof(uintptr_t));
 	nc.eip=(uintptr_t)entry;
 	nc.cs=0x8;
-	nc.eflags=0x2;
+	nc.eflags=0x200;
 	nc.prot=p;
 	*(_Context * )ret =nc;
 	return (_Context *)ret;

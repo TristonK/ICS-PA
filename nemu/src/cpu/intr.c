@@ -21,7 +21,9 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  // decoding.is_jmp=1; 
   rtl_j(decoding.jmp_eip);
  // decoding_set_jmp(true);
+ cpu.IF=false;
 }
 
 void dev_raise_intr() {
+	cpu.INTR=true;
 }

@@ -33,7 +33,8 @@ _Context* irq_handle(_Context *tf) {
     switch (tf->irq) {
 	  case 0x80: ev.event= _EVENT_SYSCALL;/*printf("0x80\n");*/break;
 	  case 0x81: ev.event= _EVENT_YIELD;break;
-      default: ev.event = _EVENT_ERROR; break;
+	  case 0x20: ev.event= _EVENT_IRQ_TIMER;break;
+	  default: ev.event = _EVENT_ERROR; break;
     }
 
     next = user_handler(ev, tf);
