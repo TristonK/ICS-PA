@@ -20,8 +20,8 @@ int mm_brk(uintptr_t new_brk) {
 	}
 //	else{
 		if(new_brk > current->max_brk){
-			uintptr_t va_begin = /*PGROUNDUP(current->max_brk);*/(current->max_brk+0xfff)&(~0xfff);
-			uintptr_t va_end = new_brk;
+			uintptr_t va_begin = current->max_brk;//*PGROUNDUP(current->max_brk);*/(current->max_brk+0xfff)&(~0xfff);
+			uintptr_t va_end = (new_brk&0xfff)?new_brk+PGSIZE:new_brk;
 			uintptr_t va=va_begin;
 			for(;va < va_end; va+=PGSIZE){
 				void* pa = new_page(1);
