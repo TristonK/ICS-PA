@@ -1,5 +1,6 @@
 #include "memory.h"
 #include "proc.h"
+
 static void *pf = NULL;
 
 void* new_page(size_t nr_page) {
@@ -12,26 +13,20 @@ void* new_page(size_t nr_page) {
 void free_page(void *p) {
   panic("not implement yet");
 }
-//extern uintptr_t heapstart;
+
 /* The brk() system call handler. */
 int mm_brk(uintptr_t new_brk) {
-	if(current->cur_brk == 0){
-		current->cur_brk = current->max_brk = new_brk;
+	if(new_brk>=0x1004d000)printf("in mm_brk,too big");	
+	uintptr_t *cur= &current->cur_brk;
+	uintptr_t *max= &current->max_brk;
+//	if(*max>=(0x1004e000-10*PGSIZE))printf("find in mm_brk\n");
+	*cur=(new_brk&0xfff)?new_brk+PGSIZE:new_brk;	 
+//	printf("brk_in%x cur%x\n",new_brk,current->cur_brk);
+	while(*cur > *max){
+		_map(&current->as,(void *)(*max),new_page(1),1);
+		*max+=PGSIZE;
 	}
-//	else{
-		if(new_brk > current->max_brk){
-			uintptr_t va_begin = current->max_brk;//*PGROUNDUP(current->max_brk);*/(current->max_brk+0xfff)&(~0xfff);
-			uintptr_t va_end = (new_brk&0xfff)?new_brk+PGSIZE:new_brk;
-			uintptr_t va=va_begin;
-			for(;va < va_end; va+=PGSIZE){
-				void* pa = new_page(1);
-				_map(&current->as,(void*)va,pa,1);
-			}
-			current->max_brk = va;//new_brk;
-		}
-		current->cur_brk = (new_brk&0xfff)?new_brk+PGSIZE:new_brk;
-//	}
-	return 0;
+  return 0;
 }
 
 void init_mm() {
