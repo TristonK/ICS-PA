@@ -17,16 +17,15 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 // size_t len = get_ramdisk_size();
 int fd=fs_open(filename,0,0);
  size_t filesize=fs_filesz(fd);
- uintptr_t va=0x8048000;
+ uintptr_t va=DEFAULT_ENTRY;
  uintptr_t end=DEFAULT_ENTRY+filesize;
  for(;va<end;va+=PGSIZE){
 	void *pa=new_page(1);
-//	_map(&pcb->as,(void*)va,pa,1);
+	_map(&pcb->as,(void*)va,pa,1);
     uintptr_t readsize=(end-va>PGSIZE)?PGSIZE:end-va;
-	fs_read(fd,pa,readsize);
-	_map(&(pcb->as),(void *)va,pa,1);  
+	fs_read(fd,pa,readsize);  
  }
- current->cur_brk = current->max_brk= va;
+ pcb->cur_brk = pcb->max_brk= va;
 // heapstart=va;
 // fs_read(fd,buf,filesize);
  fs_close(fd);
