@@ -40,6 +40,7 @@ _Context* schedule(_Context *prev) {
 	current=&pcb[0];
   }
   else{
+	time_cnt++;
  // Log("pg_pcb is %d",fg_pcb);
   current=&pcb[fg_pcb];}
  // current=(current==&pcb[0]?&pcb[fg_pcb]:&pcb[0]);
